@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <data>
+    
+        <record id="view_report_invoice_customer_wizard" model="ir.ui.view">
+            <field name="name">report.invoice.customer.wizard.form</field>
+            <field name="model">report.invoice.customer.wizard</field>
+            <field name="arch" type="xml">
+                <form string="Report Invoice Customer">
+                    <group>
+                        <group>
+                            <field name="start_date" /> 
+                        </group>
+                        <group>
+                            <field name="end_date" /> 
+                        </group>
+                    </group>
+                    <group>
+                        <field name="customer_ids"  widget="many2many_tags" options="{'no_create': True, 'no_create_edit':True}"/> 
+                    </group>
+                    <footer>
+                        <button name="generate_report" string="Print" type="object" class="btn-primary"/>
+                        <button string="Cancel" class="btn-secondary" special="cancel" />
+                    </footer>
+                </form>
+            </field>
+        </record>
+
+        <act_window id="action_report_invoice_customer_wizard"
+                name="Report Invoice Customer"
+                res_model="report.invoice.customer.wizard"
+                view_mode="form"
+                target="new"/>
+
+        <menuitem action="action_report_invoice_customer_wizard"
+                id="menu_report_invoice_customer_wizard"
+                parent="account.menu_finance_reports"/>
+
+    </data>
+    
+</odoo>

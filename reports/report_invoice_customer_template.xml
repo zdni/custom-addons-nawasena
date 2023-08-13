@@ -1,0 +1,81 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <data>
+    
+        <template id="report_invoice_customer">
+            <t t-call="web.html_container">
+                <t t-call="web.external_layout">
+                    <div class="page" style="font-size: 13px !important;">
+                        <div class="text-center">
+                            <h4>LAPORAN TAGIHAN</h4>
+                            <p><t t-esc="start_date" t-options="{'widget': 'date','format': 'dd MMM yyyy'}"/> sampai <t t-esc="end_date" t-options="{'widget': 'date','format': 'dd MMM yyyy'}"/></p>
+
+                            <t t-foreach="datas.keys()" t-as="customer">
+                                <t t-set="total_amount" t-value="0"/>
+                                <h4><t t-esc="customer"/></h4>
+                                <div class="row mb-5">
+                                    <div class="col-12">
+                                        <table class="table table-sm table-bordered table-striped">
+                                            <thead>
+                                                <th>#</th>
+                                                <th>Tanggal</th>
+                                                <th>Tagihan</th>
+                                                <th>Tujuan</th>
+                                                <th>Lokasi</th>
+                                                <th>Qty</th>
+                                                <th class="text-right">Harga</th>
+                                                <th class="text-right">Total</th>
+                                            </thead>
+                                            <tbody>
+                                                <t t-set="number" t-value="0"/>
+                                                <tr t-foreach="datas[customer]" t-as='line'>
+                                                    <t t-set="number" t-value="number + 1"/>
+                                                    <td><t t-esc="number"/></td>
+                                                    <td><t t-esc="line['date']" t-options="{'widget': 'date','format': 'dd MMM yyyy'}"/></td>
+                                                    <td><t t-esc="line['number']"/></td>
+                                                    <td><t t-esc="line['customer']"/></td>
+                                                    <td><t t-esc="line['location']"/></td>
+                                                    <td><t t-esc="line['qty']"/> L</td>
+                                                    <td class="text-right"><t t-esc="line['unit_price']" t-options="{'widget': 'monetary', 'display_currency': res_company.currency_id}"/></td>
+                                                    <td class="text-right">
+                                                        <t t-esc="line['amount']" t-options="{'widget': 'monetary', 'display_currency': res_company.currency_id}"/>
+                                                        <t t-set="total_amount" t-value="total_amount + line['amount']"/>
+                                                    </td>
+                                                </tr>
+                                            </tbody>
+                                            <tfoot>
+                                                <tr>
+                                                    <td colspan="7"><b>Total</b></td>
+                                                    <td class="text-right"><b><t t-esc="total_amount" t-options="{'widget': 'monetary', 'display_currency': res_company.currency_id}"/></b></td>
+                                                </tr>
+                                            </tfoot>
+                                        </table>
+                                    </div>
+                                </div>
+                            </t>
+
+                            <div class="row">
+                                <div class="col-6"></div>
+                                <div class="col-6">
+                                    <p>Payment Account</p>
+                                    <ul>
+                                        <li>Bank Mandiri 162.00.111.55.888</li>
+                                        <li>Bank BCA 724-5367899</li>
+                                    </ul>
+                                    <p>an PT. Nawasena Multi Sarana</p>
+                                </div>
+                            </div>
+
+                            <div class="text-center">
+                                <p style="height: 80px;">Hormat Kami,</p>
+                                <p>PT. NAWASENA MULTI SARANA</p>
+                            </div>
+                        </div>
+                    </div>
+                </t>
+            </t>
+        </template>
+    
+    </data>
+    
+</odoo>
