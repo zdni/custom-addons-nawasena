@@ -1,0 +1,136 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+
+    <template id="report_installments_payment">
+        <t t-call="web.html_container">
+            <t t-call="web.external_layout">
+                <div class="page">
+                    <div class="oe_structure" />
+
+                    <center>
+                        <h3>Dokumen Angsuran</h3>
+                        <h4><t t-esc="docs.name"/></h4>
+                    </center>
+
+                    <div class="row">
+                        <div class="col-8">
+                            <table class="table table-sm table-bordered">
+                                <tr>
+                                    <th>Deskripsi</th>
+                                    <td><t t-esc="docs.description"/></td>
+                                </tr>
+                                <tr>
+                                    <th>Aset</th>
+                                    <td><t t-esc="docs.asset"/></td>
+                                </tr>
+                            </table>
+                        </div>
+                    </div>
+
+                    <div class="row mt32 mb32">
+                        <div class="col-5">
+                            <table class="table table-sm table-bordered">
+                                <tr>
+                                    <th>Pengaju</th>
+                                    <td><t t-esc="docs.user_id.name"/></td>
+                                </tr>
+                                <tr>
+                                    <th>Tanggal Mulai</th>
+                                    <td><t t-esc="docs.payment_date" t-options="{'widget': 'date','format': 'dd MMM yyyy'}"/></td>
+                                </tr>
+                                <tr>
+                                    <th>Status</th>
+                                    <td><t t-esc="state_doc[docs.state]"/></td>
+                                </tr>
+                            </table>
+                        </div>
+                        <div class="col-2"></div>
+                        <div class="col-5">
+                            <table class="table table-sm table-bordered">
+                                <tr>
+                                    <th>Tipe Angsuran</th>
+                                    <td><t t-esc="type[docs.type]"/></td>
+                                </tr>
+                                <tr>
+                                    <th>Tipe Bunga</th>
+                                    <td><t t-esc="interest_type[docs.interest_type]"/></td>
+                                </tr>
+                            </table>
+                        </div>
+                    </div>
+
+                    <div class="row mt32 mb32">
+                        <div class="col-5">
+                            <table class="table table-sm table-bordered">
+                                <tr>
+                                    <th>Total Tagihan</th>
+                                    <td class="text-right"><t t-esc="docs.total_amount" t-options="{'widget': 'monetary', 'display_currency': res_company.currency_id}"/></td>
+                                </tr>
+                                <tr>
+                                    <th>Down Payment</th>
+                                    <td class="text-right"><t t-esc="docs.down_payment" t-options="{'widget': 'monetary', 'display_currency': res_company.currency_id}"/></td>
+                                </tr>
+                                <tr>
+                                    <th>Plafon Kredit</th>
+                                    <td class="text-right"><t t-esc="docs.main_debt" t-options="{'widget': 'monetary', 'display_currency': res_company.currency_id}"/></td>
+                                </tr>
+                                <tr>
+                                    <th>Tenor</th>
+                                    <td class="text-right"><t t-esc="docs.tenor"/> Bulan</td>
+                                </tr>
+                            </table>
+                        </div>
+                        <div class="col-2"></div>
+                        <div class="col-5">
+                            <table class="table table-sm table-bordered">
+                                <tr>
+                                    <th>Bunga</th>
+                                    <td class="text-right"><t t-esc="docs.interest"/>%</td>
+                                </tr>
+                                <tr>
+                                    <th>Angsuran</th>
+                                    <td class="text-right"><t t-esc="docs.installments" t-options="{'widget': 'monetary', 'display_currency': res_company.currency_id}"/></td>
+                                </tr>
+                                <tr>
+                                    <th>Koreksi Angsuran</th>
+                                    <td class="text-right"><t t-esc="docs.installments_corr" t-options="{'widget': 'monetary', 'display_currency': res_company.currency_id}"/></td>
+                                </tr>
+                            </table>
+                        </div>
+                    </div>
+
+                    <table class="table table-sm table-bordered">
+                        <thead>
+                            <th>#</th>
+                            <th>Bunga</th>
+                            <th>Utang Pokok</th>
+                            <th>Total</th>
+                            <th>Tanggal Pembayaran</th>
+                            <th>Status</th>
+                        </thead>
+                        <tbody>
+                            <t t-foreach="docs.line_ids" t-as="line">
+                                <tr>
+                                    <td><t t-esc="line.name"/></td>
+                                    <td class="text-right"><t t-esc="line.interest" t-options="{'widget': 'monetary', 'display_currency': res_company.currency_id}"/></td>
+                                    <td class="text-right"><t t-esc="line.main_debt" t-options="{'widget': 'monetary', 'display_currency': res_company.currency_id}"/></td>
+                                    <td class="text-right"><t t-esc="line.amount" t-options="{'widget': 'monetary', 'display_currency': res_company.currency_id}"/></td>
+                                    <td><t t-esc="line.payment_date"/></td>
+                                    <td><t t-esc="state[line.state]"/></td>
+                                </tr>
+                            </t>
+                        </tbody>
+                        <tfoot>
+                            <tr>
+                                <th colspan="3">Sisa Tagihan</th>
+                                <th class="text-right"><t t-esc="docs.remaining" t-options="{'widget': 'monetary', 'display_currency': res_company.currency_id}"/></th>
+                                <td colspan="2"></td>
+                            </tr>
+                        </tfoot>
+                    </table>
+                </div>
+            </t>
+        </t>
+    </template>
+
+</odoo>

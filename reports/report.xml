@@ -1,0 +1,26 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <data>
+    
+        <report 
+            id="action_report_installments_payment"
+            string="Installments Payment"
+            model="installments.payment"
+            report_type="qweb-pdf"
+            file="installments_payment.report_installments_payment" 
+            name="installments_payment.report_installments_payment"
+            print_report_name="'Installments Payment - %s' % (object.name)"
+        />
+
+        <report 
+            id="action_report_pr_installments_payment"
+            string="Payment Request"
+            model="pr.installments.payment"
+            report_type="qweb-pdf"
+            file="installments_payment.report_pr_installments_payment" 
+            name="installments_payment.report_pr_installments_payment"
+            print_report_name="(object.name)"
+        />
+    
+    </data>
+</odoo>

@@ -1,0 +1,48 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <data>
+    
+        <record id="res_config_settings_view_form" model="ir.ui.view">
+            <field name="name">res.config.settings.view.form.inherit</field>
+            <field name="model">res.config.settings</field>
+            <field name="priority" eval="50"/>
+            <field name="inherit_id" ref="account.res_config_settings_view_form"/>
+            <field name="arch" type="xml">
+                <xpath expr="//div[@id='setup']" position="inside">
+                    <div class="col-xs-12 col-md-6 o_setting_box">
+                        <div class="o_setting_left_pane"/>
+                        <div class="o_setting_right_pane">
+                            <span class="o_form_label">Default Account</span>
+                            <div class="text-muted">
+                                Default Account for Bank Installments
+                            </div>
+                            <div class="content-group">
+                                <div class="row mt16">
+                                    <label string="Bank Debt" for="bank_debt_id" class="col-lg-3 o_light_label"/>
+                                    <field name="bank_debt_id"/>
+                                </div>
+                                <div class="row">
+                                    <label string="Interest Debt" for="interest_debt_id" class="col-lg-3 o_light_label"/>
+                                    <field name="interest_debt_id"/>
+                                </div>
+                                <div class="row">
+                                    <label string="Asset Debt" for="asset_debt_id" class="col-lg-3 o_light_label"/>
+                                    <field name="asset_debt_id"/>
+                                </div>
+                                <div class="row">
+                                    <label string="Leasing" for="leasing_id" class="col-lg-3 o_light_label"/>
+                                    <field name="leasing_id"/>
+                                </div>
+                                <div class="row">
+                                    <label string="Account Installments Diff" for="installments_diff_id" class="col-lg-3 o_light_label"/>
+                                    <field name="installments_diff_id"/>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </xpath>
+            </field>
+        </record>
+    
+    </data>
+</odoo>

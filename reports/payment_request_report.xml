@@ -1,0 +1,89 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+
+    <template id="report_pr_installments_payment">
+        <t t-call="web.html_container">
+            <t t-call="web.external_layout">
+                <div class="page">
+                    <div class="oe_structure" />
+
+                    <center>
+                        <h3>PAYMENT REQUEST ANGSURAN</h3>
+                        <h4><t t-esc="docs.name"/></h4>
+                        <p><t t-esc="docs.start_date" t-options="{'widget': 'date','format': 'dd MMM yyyy'}"/> sampai <t t-esc="docs.end_date" t-options="{'widget': 'date','format': 'dd MMM yyyy'}"/></p>
+                    </center>
+
+                    <div class="mb32 mt32">
+                        <table class="table table-sm table-bordered">
+                            <thead>
+                                <tr>
+                                    <th>#</th>
+                                    <th>Payment</th>
+                                    <th>Keterangan</th>
+                                    <th>Jatuh Tempo</th>
+                                    <th>Amount</th>
+                                    <th>Bunga</th>
+                                    <th>Total</th>
+                                    <th>Status</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <t t-set="number" t-value="0"/>
+                                <t t-set="total_installments" t-value="0"/>
+                                <t t-foreach="docs.line_ids" t-as="line">
+                                    <t t-set="number" t-value="number + 1"/>
+                                    <t t-set="total_installments" t-value="total_installments + line.total_installments"/>
+                                    <tr>
+                                        <td><t t-esc="number"/></td>
+                                        <td><t t-esc="line.installments_id.doc_id.name"/></td>
+                                        <td><t t-esc="line.installments_id.name"/></td>
+                                        <td><t t-esc="line.installments_id.payment_date" t-options="{'widget': 'date','format': 'dd MMM yyyy'}"/></td>
+                                        <td><t t-esc="line.amount" t-options="{'widget': 'monetary', 'display_currency': res_company.currency_id}"/></td>
+                                        <td><t t-esc="line.interest_amount" t-options="{'widget': 'monetary', 'display_currency': res_company.currency_id}"/></td>
+                                        <td><t t-esc="line.total_installments" t-options="{'widget': 'monetary', 'display_currency': res_company.currency_id}"/></td>
+                                        <td><t t-esc="state[line.state]"/></td>
+                                    </tr>
+                                </t>
+                            </tbody>
+                        </table>
+                    </div>
+
+                    <div class="row mb32">
+                        <div class="col-8"></div>
+                        <div class="col-4">
+                            <table class="table table-sm table-bordered">
+                                <tr>
+                                    <th>Total</th>
+                                    <td><t t-esc="total_installments" t-options="{'widget': 'monetary', 'display_currency': res_company.currency_id}"/></td>
+                                </tr>
+                            </table>
+                        </div>
+                    </div>
+
+                    <table class="table table-sm table-bordered">
+                        <tr>
+                            <th>Dibuat Oleh</th>
+                            <th>Payment</th>
+                            <th>Checked</th>
+                            <th>Approved</th>
+                        </tr>
+                        <tr>
+                            <td style="height: 100px;"></td>
+                            <td style="height: 100px;"></td>
+                            <td style="height: 100px;"></td>
+                            <td style="height: 100px;"></td>
+                        </tr>
+                        <tr>
+                            <td><t t-esc="docs.user_id.name"/></td>
+                            <td><t t-esc="docs.user_id.name"/></td>
+                            <td>Dedy Kurniawan</td>
+                            <td>Direktur</td>
+                        </tr>
+                    </table>
+
+                </div>
+            </t>
+        </t>
+    </template>
+
+</odoo>
