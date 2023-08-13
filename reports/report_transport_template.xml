@@ -1,0 +1,80 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <data>
+    
+        <template id="report_transport">
+            <t t-call="web.html_container">
+                <t t-call="web.external_layout">
+                    <div class="page">
+                        <div class="text-center">
+                            <h4>LAPORAN ANGKUTAN</h4>
+                            <p><t t-esc="start_date" t-options="{'widget': 'date'}"/> sampai <t t-esc="end_date" t-options="{'widget': 'date'}"/></p>
+
+                            <t t-foreach="datas['customer'].keys()" t-as="customer">
+                                <h4><t t-esc="customer"/></h4>
+                                <div class="row mt-2 mb-5">
+                                    <div class="col-12">
+                                        <table class="table table-sm table-bordered table-striped">
+                                            <thead>
+                                                <th>#</th>
+                                                <th>Tanggal</th>
+                                                <th>SO</th>
+                                                <th>DO</th>
+                                                <th>SJ</th>
+                                                <th>Driver</th>
+                                                <th>Plat</th>
+                                                <th>Tujuan</th>
+                                                <th>Lokasi</th>
+                                                <th>Qty</th>
+                                                <th class="text-right">OAT</th>
+                                                <th class="text-right">Total</th>
+                                                <th class="text-right">Pemakaian</th>
+                                                <th class="text-right">Fee</th>
+                                                <th class="text-right">Pendapatan</th>
+                                                <th class="text-right">SO Sistem</th>
+                                            </thead>
+                                            <tbody>
+                                                <t t-set="number" t-value="0"/>
+                                                <tr t-foreach="datas['customer'][customer]['lines']" t-as='line'>
+                                                    <t t-set="number" t-value="number + 1"/>
+                                                    <td><t t-esc="number"/></td>
+                                                    <td><t t-esc="line['date']" t-options="{'widget': 'date'}"/></td>
+                                                    <td><t t-esc="line['order_number']"/></td>
+                                                    <td><t t-esc="line['delivery_number']"/></td>
+                                                    <td><t t-esc="line['travel']"/></td>
+                                                    <td><t t-esc="line['driver']"/></td>
+                                                    <td><t t-esc="line['plate']"/></td>
+                                                    <td><t t-esc="line['destination']"/></td>
+                                                    <td><t t-esc="line['location']"/></td>
+                                                    <td><t t-esc="line['qty']"/></td>
+                                                    <td class="text-right"><t t-esc="line['oat']" t-options="{'widget': 'monetary', 'display_currency': res_company.currency_id}"/></td>
+                                                    <td class="text-right"><t t-esc="line['total']" t-options="{'widget': 'monetary', 'display_currency': res_company.currency_id}"/></td>
+                                                    <td class="text-right"><t t-esc="line['solar_usage']" t-options="{'widget': 'monetary', 'display_currency': res_company.currency_id}"/></td>
+                                                    <td class="text-right"><t t-esc="line['fee']" t-options="{'widget': 'monetary', 'display_currency': res_company.currency_id}"/></td>
+                                                    <td class="text-right"><t t-esc="line['income']" t-options="{'widget': 'monetary', 'display_currency': res_company.currency_id}"/></td>
+                                                </tr>
+                                            </tbody>
+                                            <tfoot>
+                                                <tr>
+                                                    <td colspan="9"><b>Total</b></td>
+                                                    <td><b><t t-esc="datas['customer'][customer]['total_qty']"/></b></td>
+                                                    <td></td>
+                                                    <td><b><t t-esc="datas['customer'][customer]['total']" t-options="{'widget': 'monetary', 'display_currency': res_company.currency_id}"/></b></td>
+                                                    <td><b><t t-esc="datas['customer'][customer]['total_solar_usage']" t-options="{'widget': 'monetary', 'display_currency': res_company.currency_id}"/></b></td>
+                                                    <td><b><t t-esc="datas['customer'][customer]['total_fee']" t-options="{'widget': 'monetary', 'display_currency': res_company.currency_id}"/></b></td>
+                                                    <td><b><t t-esc="datas['customer'][customer]['total_income']" t-options="{'widget': 'monetary', 'display_currency': res_company.currency_id}"/></b></td>
+                                                </tr>
+                                            </tfoot>
+                                        </table>
+                                    </div>
+                                </div>
+                            </t>
+                        </div>
+                    </div>
+                </t>
+            </t>
+        </template>
+    
+    </data>
+    
+</odoo>

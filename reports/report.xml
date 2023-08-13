@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <data>
+
+        <report 
+            id="action_report_transport"
+            string="Report Transport"
+            model="report.transport.wizard"
+            report_type="qweb-pdf"
+            file="report_transport.report_transport" 
+            name="report_transport.report_transport"
+            print_report_name="'Report Transport'"
+        />
+
+
+        <report
+            id="action_report_transport_xlsx"
+            model="report.transport.wizard"
+            string="Report Transport Excel"
+            report_type="xlsx"
+            name="report_transport.report_transport_xlsx"
+            file="report_transport.report_transport_xlsx"
+            attachment_use="True"
+            menu = "False"
+        />
+    
+    </data>
+</odoo>
