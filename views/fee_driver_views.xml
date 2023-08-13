@@ -1,0 +1,108 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+
+    <record id="fee_driver_view_form" model="ir.ui.view">
+        <field name="name">fee.driver.view.form</field>
+        <field name="model">fee.driver</field>
+        <field name="arch" type="xml">
+            <form string="Fee Driver" class="o_sale_order">
+                <header>
+                    <button name="print_doc" string="Print" type="object" class="o_sale_print"/>
+                    <button name="action_cancel" states="draft,posted" string="Cancel" type="object" class="o_sale_print"/>
+                    <button name="action_posted" states="draft" string="Post" type="object" class="oe_highlight"/>
+                    <button name="action_draft" states="cancel" string="Draft" type="object" class="o_sale_print"/>
+                    <field name="state" widget="statusbar" statusbar_visible="draft,posted,cancel"/>
+                </header>
+                <sheet>
+                    <div class="oe_title">
+                        <h1>
+                            <field name="name" readonly="1" />
+                        </h1>
+                    </div>
+                    <group>
+                        <field name="delivery_date" />
+                        <field name="journal_id" />
+                    </group>
+                    <notebook>
+                        <page name="lines" string="Fee Lines">
+                            <field name="line_ids"
+                                widget="section_and_note_one2many"
+                                mode="tree"
+                            >
+                                <tree string="Fee Lines" editable="bottom">
+                                    <field name="fee_id" invisible="1"/>
+                                    <field name="name"/>
+                                    <field name="driver_id"/>
+                                    <field name="vehicle_id"/>
+                                    <field name="type"/>
+                                    <field name="amount"/>
+                                    <field name="order_ids" invisible="1"/>
+                                    <field name="journal_id" invisible="1"/>
+                                    <field name="state" readonly="1"/>
+                                </tree>
+                            </field>
+                            <button name="generate_fee" string="Generate" type="object" class="btn btn-primary btn-sm mr-3" attrs="{'invisible': [('state', '=', 'posted')]}"/>
+                            <button name="calculate_fee" string="Calculate" type="object" class="btn btn-sm" attrs="{'invisible': [('state', '=', 'posted')]}"/>
+                            <group class="oe_subtotal_footer oe_right" colspan="2" name="sale_total">
+                                <div class="oe_subtotal_footer_separator oe_inline o_td_label">
+                                    <label for="amount_total"/>
+                                </div>
+                                <field name="amount_total" nolabel="1" class="oe_subtotal_footer_separator" widget='monetary' options="{'currency_field': 'currency_id'}"/>
+                            </group>
+                            <div class="oe_clear"/>
+                        </page>
+                        <page name="other" string="Other Information">
+                            <group>
+                                <group>
+                                    <field name="fee_handover_only" />
+                                </group>
+                                <group>
+                                    <field name="fee_handover" />
+                                </group>
+                            </group>
+                        </page>
+                    </notebook>
+                </sheet>
+                <div class="oe_chatter">
+                    <field name="message_follower_ids" widget="mail_followers"/>
+                    <field name="activity_ids" widget="mail_activity"/>
+                    <field name="message_ids" widget="mail_thread"/>
+                </div>
+            </form>
+        </field>
+    </record>
+
+    <record id="fee_driver_view_tree" model="ir.ui.view">
+        <field name="name">fee.driver.view.tree</field>
+        <field name="model">fee.driver</field>
+        <field name="arch" type="xml">
+            <tree string="Fee Driver">
+                <field name="name" />
+                <field name="delivery_date" />
+                <field name="amount_total" />
+                <field name="state" />
+            </tree>
+        </field>
+    </record>
+
+    <record id="fee_driver_action" model="ir.actions.act_window">
+        <field name="name">Fee Driver</field>
+        <field name="res_model">fee.driver</field>
+        <field name="view_mode">tree,form</field>
+        <field name="domain">[]</field>
+        <field name="context">{}</field>
+        <field name="help" type="html">
+            <p class="o_view_nocontent_smiling_face">
+                Create Fee Driver document from Sale Order Document.
+            </p>
+        </field>
+    </record>
+
+    <menuitem 
+        action="fee_driver_action" 
+        id="menu_fee_driver_action" 
+        parent="sale.sale_order_menu" 
+        sequence="10"
+    />
+
+</odoo>

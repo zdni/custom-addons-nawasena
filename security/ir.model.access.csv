@@ -1,0 +1,5 @@
+id,name,model_id/id,group_id/id,perm_read,perm_write,perm_create,perm_unlink
+fee_driver_access_right,fee_driver_access_right,model_fee_driver,sales_team.group_sale_salesman,1,1,1,1
+fee_driver_line_access_right,fee_driver_line_access_right,model_fee_driver_line,sales_team.group_sale_salesman,1,1,1,1
+pr_fee_driver_access_right,pr_fee_driver_access_right,model_pr_fee_driver,base.group_user,1,1,1,1
+prl_fee_driver_access_right,prl_fee_driver_access_right,model_prl_fee_driver,base.group_user,1,1,1,1

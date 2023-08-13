@@ -1,0 +1,107 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+
+    <template id="report_pr_fee_driver">
+        <t t-call="web.html_container">
+            <t t-call="web.external_layout">
+                <div class="page" style="font-size: 12px;">
+                    <div class="oe_structure" />
+                    
+                    <center>
+                        <h3>PAYMENT REQUEST FEE DRIVER</h3>
+                        <h4><t t-esc="docs.name"/></h4>
+                        <p><t t-esc="docs.start_date" t-options="{'widget': 'date','format': 'dd MMM yyyy'}"/> sampai <t t-esc="docs.end_date" t-options="{'widget': 'date','format': 'dd MMM yyyy'}"/></p>
+                    </center>
+
+                    <t t-set="total_fee" t-value="0"/>
+                    <t t-foreach="results.keys()" t-as="driver">
+                        <t t-set="amount_total" t-value="0"/>
+                        <div class="mb-2">
+                            <h4><t t-esc="driver"/></h4>
+                            <table class="table table-sm table-reports">
+                                <thead>
+                                    <tr>
+                                        <th>#</th>
+                                        <th>Tanggal</th>
+                                        <th>SO</th>
+                                        <th>Asal</th>
+                                        <th>Kendaraan</th>
+                                        <th>Tujuan</th>
+                                        <th>Qty</th>
+                                        <th>Fee</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <t t-set="number" t-value="0"/>
+                                    <t t-foreach="results[driver]" t-as="line">
+                                        <t t-set="number" t-value="number + 1"/>
+                                        <t t-set="amount_total" t-value="amount_total + line['fee']"/>
+                                        <t t-set="total_fee" t-value="total_fee + line['fee']"/>
+                                        <tr>
+                                            <td><t t-esc="number"/></td>
+                                            <td><t t-esc="line['date']" t-options="{'widget': 'date','format': 'dd MMM yyyy'}"/></td>
+                                            <td><t t-esc="line['order']"/></td>
+                                            <td><t t-esc="line['origin']"/></td>
+                                            <td><t t-esc="line['vehicle']"/></td>
+                                            <td><t t-esc="line['destination']"/></td>
+                                            <td><t t-esc="line['qty']"/></td>
+                                            <td><t t-esc="line['fee']" t-options="{'widget': 'monetary', 'display_currency': res_company.currency_id}"/></td>
+                                        </tr>
+                                    </t>
+                                </tbody>
+                                <tfoot>
+                                    <tr>
+                                        <td colspan="7"><b>Total</b></td>
+                                        <td><t t-esc="amount_total" t-options="{'widget': 'monetary', 'display_currency': res_company.currency_id}"/></td>
+                                    </tr>
+                                </tfoot>
+                            </table>
+                        </div>
+                    </t>
+
+                    <div class="row mb-2">
+                        <div class="col-8"></div>
+                        <div class="col-4">
+                            <table>
+                                <tr>
+                                    <td><b>Total</b></td>
+                                    <td><t t-esc="total_fee" t-options="{'widget': 'monetary', 'display_currency': res_company.currency_id}"/></td>
+                                </tr>
+                            </table>
+                        </div>
+                    </div>
+
+                    <div class="clearfix mt32">
+                        <table class="table table-sm table-bordered">
+                            <tr>
+                                <td>Dibuat Oleh</td>
+                                <td>Diperiksa,</td>
+                                <td>Pembayaran,</td>
+                                <td>Disetujui,</td>
+                            </tr>
+                            <tr>
+                                <td style="height: 100px;"></td>
+                                <td style="height: 100px;"></td>
+                                <td style="height: 100px;"></td>
+                                <td style="height: 100px;"></td>
+                            </tr>
+                            <tr>
+                                <td><t t-esc="docs.user_id.name"/></td>
+                                <td>DEDY KURNIAWAN</td>
+                                <td><t t-esc="docs.approver_id.name"/></td>
+                                <td>DIREKTUR UTAMA</td>
+                            </tr>
+                            <tr>
+                                <td>Admin Data Entry</td>
+                                <td>General Manager</td>
+                                <td>Finance</td>
+                                <td></td>
+                            </tr>
+                        </table>
+                    </div>
+                </div>
+            </t>
+        </t>
+    </template>
+
+</odoo>

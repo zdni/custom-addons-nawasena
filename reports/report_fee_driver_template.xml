@@ -1,0 +1,94 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+
+    <template id="report_fee_driver">
+        <t t-call="web.html_container">
+            <t t-call="web.external_layout">
+                <div class="page">
+                    <div class="oe_structure" />
+                    
+                    <center>
+                        <h3>FEE DRIVER</h3>
+                        <h4><t t-esc="docs.name"/></h4>
+                    </center>
+
+                    <div class="row mt32 mb32">
+                        <div class="col-6">
+                            <table class="table table-sm table-bordered">
+                                <tbody>
+                                    <tr>
+                                        <th>Tanggal Pengantaran</th>
+                                        <td>:</td>
+                                        <td><t t-esc="docs.delivery_date" t-options="{'widget': 'date','format': 'dd MMM yyyy'}"/></td>
+                                    </tr>
+                                    <tr>
+                                        <th>Total</th>
+                                        <td>:</td>
+                                        <td><t t-esc="docs.amount_total" t-options="{'widget': 'monetary', 'display_currency': res_company.currency_id}"/></td>
+                                    </tr>
+                                    <tr>
+                                        <th>Status</th>
+                                        <td>:</td>
+                                        <td><t t-esc="state['doc'][docs.state]"/></td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                        </div>
+                        <div class="col-2"></div>
+                        <div class="col-4">
+                            <table class="table table-sm table-reports">
+                                <tbody>
+                                    <tr>
+                                        <th>Hanya Oper Tangki</th>
+                                        <td>:</td>
+                                        <td><t t-esc="docs.fee_handover_only" t-options="{'widget': 'monetary', 'display_currency': res_company.currency_id}"/></td>
+                                    </tr>
+                                    <tr>
+                                        <th>Oper Tangki + Pengantaran</th>
+                                        <td>:</td>
+                                        <td><t t-esc="docs.fee_handover" t-options="{'widget': 'monetary', 'display_currency': res_company.currency_id}"/></td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                    
+                    <table class="table table-sm table-reports">
+                        <thead>
+                            <tr>
+                                <th>#</th>
+                                <th>Driver</th>
+                                <th>Kendaraan</th>
+                                <th>Tipe</th>
+                                <th>Dokumen</th>
+                                <th>Fee</th>
+                                <th>Status</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <t t-set="number" t-value="0"/>
+                            <t t-foreach="docs.line_ids" t-as="line">
+                                <t t-set="number" t-value="number + 1"/>
+                                <tr>
+                                    <td><t t-esc="number"/></td>
+                                    <td><t t-esc="line.driver_id.name"/></td>
+                                    <td><t t-esc="line.vehicle_id.name"/></td>
+                                    <td><t t-esc="type[line.type]"/></td>
+                                    <t t-if="line.delivery_id">
+                                        <td><t t-esc="line.delivery_id.name"/></td>
+                                    </t>
+                                    <t t-if="line.handover_id">
+                                        <td><t t-esc="line.handover_id.name"/></td>
+                                    </t>
+                                    <td><t t-esc="line.amount" t-options="{'widget': 'monetary', 'display_currency': res_company.currency_id}"/></td>
+                                    <td><t t-esc="state['line'][line.state]"/></td>
+                                </tr>
+                            </t>
+                        </tbody>
+                    </table>
+                </div>
+            </t>
+        </t>
+    </template>
+
+</odoo>
