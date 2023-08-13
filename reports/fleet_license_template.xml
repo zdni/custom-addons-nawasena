@@ -1,0 +1,57 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+
+        <template id="report_fleet_license">
+            <t t-call="web.html_container">
+                <t t-call="web.external_layout">
+                    <div class="page">
+
+                        <div class="text-center">
+                            <h2>Laporan Legal Jatuh Tempo</h2>
+
+                            <strong><t t-esc="date_start" t-options="{'widget': 'date','format': 'dd MMM yyyy'}"/> - <t t-esc="date_stop" t-options="{'widget': 'date','format': 'dd MMM yyyy'}"/></strong>
+                        </div>
+                        <br />
+
+                        <t t-foreach="datas.keys()" t-as="data">
+                            <div class="text-center">
+                                <h5><t t-esc="data"/></h5>
+                            </div>
+                            <div class="row mb-5">
+                                <div class="col-12">
+                                    <table class="table table-sm table-bordered table-striped">
+                                        <thead>
+                                            <th>Lisensi</th>
+                                            <th>No. Registrasi</th>
+                                            <th>Tgl Registrasi</th>
+                                            <th>Tgl Jatuh Tempo</th>
+                                            <th>Status</th>
+                                        </thead>
+                                        <tbody>
+                                            <tr t-foreach="datas[data]" t-as='line'>
+                                                <td><t t-esc="line['license']"/></td>
+                                                <td><t t-esc="line['number']"/></td>
+                                                <td><t t-esc="line['registration_date']" t-options="{'widget': 'date','format': 'dd MMM yyyy'}"/></td>
+                                                <td><t t-esc="line['expiry_date']" t-options="{'widget': 'date','format': 'dd MMM yyyy'}"/></td>
+                                                <td><t t-esc="line['state']"/></td>
+                                            </tr>
+                                        </tbody>
+                                    </table>
+                                </div>
+                            </div>
+                        </t>
+
+                    </div>
+                </t>
+            </t>
+        </template>
+
+    <report id="fleet_license_report"
+        model="fleet.license.wizard"
+        string="License Report"
+        report_type="qweb-pdf"
+        name="custom_fleet.report_fleet_license"
+        menu="False"
+    />
+
+</odoo>

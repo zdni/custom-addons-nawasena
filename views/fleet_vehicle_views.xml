@@ -1,0 +1,270 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+
+    <record id="fleet_vehicle_view_form_inherit_fleet" model="ir.ui.view">
+        <field name="name">fleet.vehicle.view.form.inherit</field>
+        <field name="model">fleet.vehicle</field>
+        <field name="inherit_id" ref="fleet.fleet_vehicle_view_form"/>
+        <field name="arch" type="xml">
+            <xpath expr="//field[@name='driver_id']" position="attributes">
+                <attribute name="domain" value="[('is_driver', '=', True)]">[('is_driver', '=', True)]</attribute>
+            </xpath>
+            <field name="color" position="after">
+                <field name="capacity_id" />
+            </field>
+            <xpath expr="//sheet" position="inside">
+                <notebook>
+                    <page name="gauge_tank_log" string="Gauge Tank Logs">
+                        <field name="gauge_tank_log_ids" 
+                            widget="section_and_note_one2many"
+                            mode="tree"
+                        >
+                            <tree string="Gauge Tank Logs" editable="bottom">
+                                <field name="vehicle_id" invisible="1"/>
+                                <field name="value"/>
+                                <field name="expiry_date"/>
+                            </tree>
+                        </field>
+                    </page>
+                    <page name="licenses" string="License">
+                        <field name="license_ids" 
+                            widget="section_and_note_one2many"
+                            mode="tree"
+                        >
+                            <tree string="License" editable="bottom">
+                                <field name="vehicle_id" invisible="1"/>
+                                <field name="license_id"/>
+                                <field name="number"/>
+                                <field name="registration_date"/>
+                                <field name="expiry_date"/>
+                                <field name="status_id"/>
+                            </tree>
+                        </field>
+                    </page>
+                    <page name="equipments" string="Equipment">
+                        <field name="equipment_ids" 
+                            widget="section_and_note_one2many"
+                            mode="tree"
+                        >
+                            <tree string="Equipment" editable="bottom">
+                                <field name="vehicle_id" invisible="1"/>
+                                <field name="equipment_id"/>
+                                <field name="qty"/>
+                                <field name="description"/>
+                            </tree>
+                        </field>
+                    </page>
+                </notebook>
+            </xpath>
+        </field>
+    </record>
+
+    <record id="fleet_gauge_tank_log_view_list" model="ir.ui.view">
+        <field name="name">fleet.gauge.tank.log.view.tree</field>
+        <field name="model">fleet.gauge.tank.log</field>
+        <field name="arch" type="xml">
+            <tree string="Gauge Tank Logs" editable="bottom">
+                <field name="vehicle_id" invisible="1"/>
+                <field name="value"/>
+                <field name="expiry_date"/>
+            </tree>
+        </field>
+    </record>
+
+    <record id="fleet_vehicle_license_list_view_list" model="ir.ui.view">
+        <field name="name">fleet.vehicle.license.list.view.tree</field>
+        <field name="model">fleet.vehicle.license.list</field>
+        <field name="arch" type="xml">
+            <tree string="License List" editable="bottom">
+                <field name="vehicle_id" invisible="1"/>
+                <field name="license_id"/>
+                <field name="number"/>
+                <field name="registration_date"/>
+                <field name="expiry_date"/>
+                <field name="status_id"/>
+            </tree>
+        </field>
+    </record>
+
+    <record id="fleet_vehicle_equipment_list_view_list" model="ir.ui.view">
+        <field name="name">fleet.vehicle.equipment.list.view.tree</field>
+        <field name="model">fleet.vehicle.equipment.list</field>
+        <field name="arch" type="xml">
+            <tree string="Equipment List" editable="bottom">
+                <field name="vehicle_id" invisible="1"/>
+                <field name="equipment_id"/>
+                <field name="qty"/>
+                <field name="description"/>
+            </tree>
+        </field>
+    </record>
+
+    <!-- Configuration -->
+
+    <record id='fleet_vehicle_tank_capacity_view_tree' model='ir.ui.view'>
+        <field name="name">fleet.vehicle.tank.capacity.tree</field>
+        <field name="model">fleet.vehicle.tank.capacity</field>
+        <field name="arch" type="xml">
+            <tree string="License State" editable="bottom">
+                <field name="name" />
+            </tree>
+        </field>
+    </record>
+
+    <record id='fleet_vehicle_tank_capacity_action' model='ir.actions.act_window'>
+        <field name="name">Tank Capacity</field>
+        <field name="res_model">fleet.vehicle.tank.capacity</field>
+        <field name="view_type">form</field>
+        <field name="view_mode">tree,form</field>
+        <field name="help" type="html">
+          <p class="o_view_nocontent_smiling_face">
+            Create a new tank capacity
+          </p>
+        </field>
+    </record>
+
+    <menuitem action="fleet_vehicle_tank_capacity_action" parent="fleet.fleet_configuration" id="fleet_vehicle_tank_capacity_menu" groups="fleet.fleet_group_manager"/>
+
+    <record id='fleet_license_status_view_tree' model='ir.ui.view'>
+        <field name="name">fleet.license.status.tree</field>
+        <field name="model">fleet.license.status</field>
+        <field name="arch" type="xml">
+            <tree string="License State" editable="bottom">
+                <field name="sequence" widget="handle"/>
+                <field name="name" />
+            </tree>
+        </field>
+    </record>
+
+    <record id='fleet_license_status_action' model='ir.actions.act_window'>
+        <field name="name">License Status</field>
+        <field name="res_model">fleet.license.status</field>
+        <field name="view_type">form</field>
+        <field name="view_mode">tree,form</field>
+        <field name="help" type="html">
+          <p class="o_view_nocontent_smiling_face">
+            Create a new license status
+          </p><p>
+            You can customize available status to track the evolution of
+            each license. Example: active, being repaired, sold.
+          </p>
+        </field>
+    </record>
+
+    <menuitem action="fleet_license_status_action" parent="fleet.fleet_configuration" id="fleet_license_status_menu" groups="fleet.fleet_group_manager"/>
+
+    <record id='fleet_license_view_tree' model='ir.ui.view'>
+        <field name="name">fleet.license.tree</field>
+        <field name="model">fleet.license</field>
+        <field name="arch" type="xml">
+            <tree string="License" editable="bottom">
+                <field name="name" />
+                <field name="short_name" />
+            </tree>
+        </field>
+    </record>
+
+    <record id='fleet_license_action' model='ir.actions.act_window'>
+        <field name="name">License</field>
+        <field name="res_model">fleet.license</field>
+        <field name="view_type">form</field>
+        <field name="view_mode">tree,form</field>
+        <field name="help" type="html">
+          <p class="o_view_nocontent_smiling_face">
+            Create a new license
+          </p><p>
+            You can customize available to track the evolution of
+            each license. Example: active, being repaired, sold.
+          </p>
+        </field>
+    </record>
+
+    <menuitem action="fleet_license_action" parent="fleet.fleet_configuration" id="fleet_license_menu" groups="fleet.fleet_group_manager"/>
+
+
+    <!-- Driver Menu -->
+    <record id="driver_filter_inherit_base" model="ir.ui.view">
+        <field name="name">res.partner.select</field>
+        <field name="model">res.partner</field>
+        <field name="inherit_id" ref="base.view_res_partner_filter"/>
+        <field name="arch" type="xml">
+            <xpath expr="//filter[@name='customer']" position="after">
+                <filter string="Drivers" name="driver" domain="[('is_driver','=',True), ('parent_id', '=', False)]"/>
+            </xpath>
+        </field>
+    </record>
+
+    <record id='driver_action' model='ir.actions.act_window'>
+        <field name="name">Driver</field>
+        <field name="type">ir.actions.act_window</field>
+        <field name="res_model">res.partner</field>
+        <field name="view_type">form</field>
+        <field name="view_mode">tree,form,kanban</field>
+        <field name="search_view_id" ref="driver_filter_inherit_base"/>
+        <field name="context">{'search_default_driver': 1}</field>
+        <field name="help" type="html">
+          <p class="o_view_nocontent_smiling_face">
+            Create a new driver
+          </p>
+        </field>
+    </record>
+
+    <menuitem action="driver_action" parent="fleet.menu_root" id="driver_menu" groups="fleet.fleet_group_user"/>
+
+    <record id="fleet_vehicle_log_services_view_form_inherit" model="ir.ui.view">
+        <field name="name">fleet.vehicle.log.services.view.form.inherit</field>
+        <field name="model">fleet.vehicle.log.services</field>
+        <field name="inherit_id" ref="fleet.fleet_vehicle_log_services_view_form"/>
+        <field name="arch" type="xml">
+            <xpath expr="//sheet" position="before">
+                <header>
+                    <button name="action_posted" states="draft" string="Post" type="object" class="oe_highlight"/>
+                    <field name="state" widget="statusbar" statusbar_visible="draft,posted"/>
+                </header>
+            </xpath>
+            <field name="cost_subtype_id" position="after">
+                <field name="type" />
+            </field>
+            <xpath expr="//group[3]//field//tree//field[@name='amount']" position="before">
+                <field name="qty" />
+                <field name="unit_price" />
+            </xpath>
+        </field>
+    </record>
+
+    <record id="log_services_action_posted_server" model="ir.actions.server">
+        <field name="name">Posted</field>
+        <field name="model_id" ref="model_fleet_vehicle_log_services"/>
+        <field name="binding_model_id" ref="model_fleet_vehicle_log_services"/>
+        <field name="state">code</field>
+        <field name="code">
+            for record in records:
+                if record.state == 'draft': record.action_posted()
+        </field>
+    </record>
+
+    <record id="fleet_vehicle_log_services_view_search_inherit" model="ir.ui.view">
+        <field name="name">fleet.vehicle.log.services.search.inherit</field>
+        <field name="model">fleet.vehicle.log.services</field>
+        <field name="inherit_id" ref="fleet.fleet_vehicle_log_services_view_search"/>
+        <field name="arch" type="xml">
+            <field name="cost_subtype_id" position="after">
+                <group expand="0" string="Group By">
+                    <filter name="groupby_state" context="{'group_by' : 'state'}" string="State"/>
+                </group>
+            </field>
+        </field>
+    </record>
+
+    <record id="fleet_vehicle_service_types_view_tree_inherit" model="ir.ui.view">
+        <field name="name">fleet.service.type.view.list.inherit</field>
+        <field name="model">fleet.service.type</field>
+        <field name="inherit_id" ref="fleet.fleet_vehicle_service_types_view_tree"/>
+        <field name="arch" type="xml">
+            <field name="category" position="before">
+                <field name="product_id" options="{'no_create': True}"/>
+            </field>
+        </field>
+    </record>
+
+</odoo>

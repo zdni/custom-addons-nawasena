@@ -1,0 +1,42 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <data>
+    
+        <record id="view_fleet_license_wizard" model="ir.ui.view">
+            <field name="name">fleet.license.wizard.form</field>
+            <field name="model">fleet.license.wizard</field>
+            <field name="arch" type="xml">
+                <form string="Report Fleet License">
+                    <group>
+                        <group>
+                            <field name="start_date" /> 
+                        </group>
+                        <group>
+                            <field name="end_date" /> 
+                        </group>
+                    </group>
+                    <footer>
+                        <button name="generate_report" string="Print" type="object" class="btn-primary"/>
+                        <button string="Cancel" class="btn-secondary" special="cancel" />
+                    </footer>
+                </form>
+            </field>
+        </record>
+
+        <act_window 
+            id="action_fleet_license_wizard"
+            name="Report Fleet License"
+            res_model="fleet.license.wizard"
+            view_mode="form"
+            target="new"
+            />
+
+        <menuitem 
+            action="action_fleet_license_wizard"
+            id="menu_fleet_license_wizard"
+            parent="fleet.menu_fleet_reporting"
+        />
+
+    </data>
+    
+</odoo>
