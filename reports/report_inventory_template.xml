@@ -1,0 +1,73 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <data>
+    
+        <template id="report_inventory">
+            <t t-call="web.html_container">
+                <t t-call="web.external_layout">
+                    <div class="page">
+                        <div class="text-center">
+                            <t t-foreach="datas.keys()" t-as="product">
+                                <h4>LAPORAN STOK <t t-esc="product"/></h4>
+                                <p><t t-esc="start_date" t-options="{'widget': 'date'}"/> sampai <t t-esc="end_date" t-options="{'widget': 'date'}"/></p>
+                                
+                                <div class="row mb-5">
+                                    <div class="col-12">
+                                        <table class="table table-sm table-bordered table-striped">
+                                            <thead>
+                                                <th>#</th>
+                                                <th>Tanggal</th>
+                                                <th>Catatan</th>
+                                                <th>Keterangan</th>
+                                                <th>Awal</th>
+                                                <th>Masuk</th>
+                                                <th>Keluar</th>
+                                                <th>Sisa</th>
+                                                <th class="text-right">Harga</th>
+                                                <th class="text-right">Total</th>
+                                            </thead>
+                                            <tbody>
+                                                <t t-set="number" t-value="0"/>
+                                                <t t-set="total_qty_in" t-value="0"/>
+                                                <t t-set="total_qty_out" t-value="0"/>
+                                                <t t-set="total_amount" t-value="0"/>
+                                                <tr t-foreach="datas[product]" t-as='line'>
+                                                    <t t-set="number" t-value="number + 1"/>
+                                                    <t t-set="total_qty_in" t-value="total_qty_in + line['qty_in']"/>
+                                                    <t t-set="total_qty_out" t-value="total_qty_out + line['qty_out']"/>
+                                                    <t t-set="total_amount" t-value="total_amount + line['real_amount']"/>
+                                                    
+                                                    <td><t t-esc="number"/></td>
+                                                    <td><t t-esc="line['date']" t-options="{'widget': 'date'}"/></td>
+                                                    <td><t t-esc="line['notes']"/></td>
+                                                    <td><t t-esc="line['information']"/></td>
+                                                    <td><t t-esc="line['qty_start']"/></td>
+                                                    <td><t t-esc="line['qty_in']"/></td>
+                                                    <td><t t-esc="line['qty_out']"/></td>
+                                                    <td><t t-esc="line['qty_balance']"/></td>
+                                                    <td class="text-right"><t t-esc="line['price']" t-options="{'widget': 'monetary', 'display_currency': res_company.currency_id}"/></td>
+                                                    <td class="text-right"><t t-esc="line['amount']" t-options="{'widget': 'monetary', 'display_currency': res_company.currency_id}"/></td>
+                                                </tr>
+                                            </tbody>
+                                            <tfoot>
+                                                <tr>
+                                                    <td colspan="5"><b>Total</b></td>
+                                                    <td><b><t t-esc="total_qty_in"/></b></td>
+                                                    <td><b><t t-esc="total_qty_out"/></b></td>
+                                                    <td colspan="2"></td>
+                                                    <td class="text-right"><b><t t-esc="total_amount" t-options="{'widget': 'monetary', 'display_currency': res_company.currency_id}"/></b></td>
+                                                </tr>
+                                            </tfoot>
+                                        </table>
+                                    </div>
+                                </div>
+                            </t>
+                        </div>
+                    </div>
+                </t>
+            </t>
+        </template>
+    
+    </data>
+    
+</odoo>

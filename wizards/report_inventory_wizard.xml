@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <data>
+    
+        <record id="view_report_inventory_wizard" model="ir.ui.view">
+            <field name="name">report.inventory.wizard.form</field>
+            <field name="model">report.inventory.wizard</field>
+            <field name="arch" type="xml">
+                <form string="Report Inventory">
+                    <group>
+                        <group>
+                            <field name="start_date" /> 
+                        </group>
+                        <group>
+                            <field name="end_date" /> 
+                        </group>
+                    </group>
+                    <group>
+                        <field name="product_ids"  widget="many2many_tags" options="{'no_create': True, 'no_create_edit':True}"/> 
+                    </group>
+                    <footer>
+                        <button name="generate_report" string="Print" type="object" class="btn-primary"/>
+                        <button string="Cancel" class="btn-secondary" special="cancel" />
+                    </footer>
+                </form>
+            </field>
+        </record>
+
+        <act_window id="action_report_inventory_wizard"
+                name="Report Inventory"
+                res_model="report.inventory.wizard"
+                view_mode="form"
+                target="new"/>
+
+        <menuitem action="action_report_inventory_wizard"
+                id="menu_report_inventory_wizard"
+                parent="sale.menu_sale_report"/>
+
+    </data>
+    
+</odoo>

@@ -1,0 +1,20 @@
+{
+    'name': 'Stock Card Product',
+    'version': '12.0',
+    'author': 'TechnoIndo',
+    'summary': 'Stock Card Product',
+    'description': "Stock Card Product",
+    'category': 'Product',
+    'website': 'http://www.technoindo.com',
+    'depends': ['sale'],
+    'images': ['static/description/icon.png'],
+    'data': [
+        'security/ir.model.access.csv',
+        'reports/report.xml',
+        'reports/report_inventory_template.xml',
+        'views/product_template.xml',
+        'views/stock_card_views.xml',
+        'wizards/report_inventory_wizard.xml',
+    ],
+    'installable': True,
+}

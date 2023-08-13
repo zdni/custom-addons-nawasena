@@ -1,0 +1,90 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+
+    <record id="stock_card_line_view_tree" model="ir.ui.view">
+        <field name="name">stock.card.line.view.tree</field>
+        <field name="model">stock.card.line</field>
+        <field name="arch" type="xml">
+            <tree string="Stock Card" create="0">
+                <field name="date"/>
+                <field name="information"/>
+                <field name="picking_id" string="Reference"/>
+                <field name="location_id"/>
+                <field name="location_dest_id"/>
+                <field name="qty_start"/>
+                <field name="qty_in"/>
+                <field name="qty_out"/>
+                <field name="qty_balance"/>
+            </tree>
+        </field>
+    </record>
+
+    <record id="stock_card_line_view_form" model="ir.ui.view">
+        <field name="name">stock.card.line.view.form</field>
+        <field name="model">stock.card.line</field>
+        <field name="arch" type="xml">
+            <form string="Stock Card">
+                <sheet>
+                    <group>
+                        <group name="main_grp" colspan="2">
+                            <group name="main_grp_col1">
+                                <field name="product_id"/>
+                                <field name="information"/>
+                                <field name="date"/>
+                            </group>
+                            <group name="main_grp_col2">
+                                <field name="qty_start"/>
+                                <field name="qty_in"/>
+                                <field name="qty_out"/>
+                                <field name="qty_balance"/>
+                            </group>
+                        </group>
+                        <group name="origin_grp" string="Lokasi Awal">
+                            <field name="location_id"/>
+                            <field name="picking_id"/>
+                        </group>
+                        <group name="destination_grp" string="Lokasi Tujuan">
+                            <field name="location_dest_id" />
+                        </group>
+                    </group>
+                </sheet>
+            </form>
+        </field>
+    </record>
+
+    <record id="view_stock_card_line_filter" model="ir.ui.view">
+        <field name="name">stock.card.line.view.search</field>
+        <field name="model">stock.card.line</field>
+        <field name="priority" eval="15"/>
+        <field name="arch" type="xml">
+            <search string="Stock Card">
+                <field name="date"/>
+                <separator/>
+                <!-- <filter string="Today" domain="[('date','&lt;=', datetime.datetime.combine(context_today(), datetime.time(23,59,59))), ('date','&gt;=', datetime.datetime.combine(context_today(), datetime.time(0,0,0)))]" help="Orders processed Today or planned for Today"/> -->
+                <field name="product_id"/>
+                <separator/>
+                <group expand="0" string="Group By">
+                    <filter string="Product" name="by_product" domain="[]"  context="{'group_by':'product_id'}"/>
+                    <filter string="Picking" name="groupby_picking_id" domain="[]"  context="{'group_by':'picking_id'}"/>
+                    <filter string="Source" name="groupby_location_id" domain="[]" context="{'group_by':'location_id'}" />
+                    <filter string="Destination" name="groupby_dest_location_id" domain="[]" context="{'group_by':'location_dest_id'}" />
+                </group>
+            </search>
+        </field>
+    </record>
+
+    <record id="stock_card_line_action" model="ir.actions.act_window">
+        <field name="name">Stock Card</field>
+        <field name="res_model">stock.card.line</field>
+        <field name="type">ir.actions.act_window</field>
+        <field name="view_type">form</field>
+        <field name="view_mode">tree,form</field>
+        <field name="context">{}</field>
+        <field name="help" type="html">
+            <p class="o_view_nocontent_empty_folder">
+                There's no stock card product yet
+              </p>
+        </field>
+    </record>
+
+</odoo>
