@@ -1,0 +1,109 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+
+    <template id="report_handover_delivery">
+        <t t-call="web.html_container">
+            <t t-call="web.external_layout">
+                <div class="page" style="font-size: 13px !important;">
+                    <div class="oe_structure"/>
+                    
+                    <center>
+                        <h3><u>BERITA ACARA</u></h3>
+                        <h3>PENYERAHAN <t t-esc="product['name']"/></h3>
+                    </center>
+
+                    <div class="col-12">
+                        <p>Pada tanggal <t t-esc="date" t-options="{'widget': 'date','format': 'dd MMM yyyy'}"/> telah dilakukan proses penerimaan <t t-esc="product['name']"/> dari:</p>
+                    </div>
+                    <div class="row mb-2">
+                        <div class="col-5">
+                            <table style="border: 1px black solid;" class="table table-sm table-bordered">
+                                <tbody>
+                                    <tr>
+                                        <td style="border: 1px black solid;"><b>No. Polisi</b></td>
+                                        <td style="border: 1px black solid;">:</td>
+                                        <td class="text-right" style="border: 1px black solid; white-space: text-nowrap;"><t t-esc="vehicle['license_plate']"/></td>
+                                    </tr>
+                                    <tr>
+                                        <td style="border: 1px black solid;"><b>Kapasitas Mobil Tangki</b></td>
+                                        <td style="border: 1px black solid;">:</td>
+                                        <td class="text-right" style="border: 1px black solid; white-space: text-nowrap;"><t t-esc="vehicle['tank_capacity']"/></td>
+                                    </tr>
+                                    <tr>
+                                        <td style="border: 1px black solid;"><b>Qty <t t-esc="product['name']"/></b></td>
+                                        <td style="border: 1px black solid;">:</td>
+                                        <td class="text-right" style="border: 1px black solid; white-space: text-nowrap;"><t t-esc="product['qty']"/></td>
+                                    </tr>
+                                    <tr>
+                                        <td style="border: 1px black solid;"><b>Sondingan</b></td>
+                                        <td style="border: 1px black solid;">:</td>
+                                        <td class="text-right" style="border: 1px black solid; white-space: text-nowrap;"><t t-esc="vehicle['gauge_tank']"/></td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+
+                    <div class="row mb-2">
+                        <table style="border: 1px black solid;" class="table table-sm table-bordered">
+                            <thead>
+                                <tr>
+                                    <th style="border: 1px black solid;">No</th>
+                                    <th style="border: 1px black solid;">Kondisi Tangki</th>
+                                    <th style="border: 1px black solid;">Ya/Baik</th>
+                                    <th style="border: 1px black solid;">Tidak</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <t t-set="number" t-value="0"/>
+                                <t t-foreach="conditions" t-as="condition">
+                                    <t t-set="number" t-value="number + 1"/>
+                                    <tr>
+                                        <td style="border: 1px black solid;"><t t-esc="number"/></td>
+                                        <td style="border: 1px black solid;"><t t-esc="condition"/></td>
+                                        <td style="border: 1px black solid;"></td>
+                                        <td style="border: 1px black solid;"></td>
+                                    </tr>
+                                </t>
+                            </tbody>
+                        </table>
+                    </div>
+
+                    <p>Setelah dilakukan <i>visual check</i> <t t-esc="product['name']"/>, maka dinyatakan bahwa barang tersebut: </p>
+
+                    <div class="mb-2 text-center">
+                        <span style="margin-right: 20px;">Diterima tanpa keberatan</span>
+                        <span style="width: 30px; height: 30px; border: solid 2px black; display: inline-block; position: relative; top: 10px;"></span><label style="margin-left: 5px; margin-right: 10px;">Ya</label> 
+                        <span style="width: 30px; height: 30px; border: solid 2px black; display: inline-block; position: relative; top: 10px;"></span><label style="margin-left: 5px; margin-right: 10px;">Tidak</label>
+                    </div>
+
+                    <p>Demikian berita acara penerimaan <t t-esc="product['name']"/> ini dibuat dengan sebenar-benarnya agar dapat digunakan sebagaimana mestinya.</p>
+
+                    <div class="clearfix">
+                        <div class="row">
+                            <div class="col-6 text-center">
+                                <p>Yang Menyerahkan</p>
+                                <p style="height: 80px;"><t t-esc="company_['name']"/></p>
+                                <p><t t-esc="driver['name']"/></p>
+                                <p>Driver</p>
+                            </div>
+                            <div class="col-6 text-center">
+                                <p>Yang Menerima,</p>
+                                <p style="height: 80px;"><t t-esc="customer['name']"/></p>
+                                <p>Spv. Penerima <t t-esc="product['name']"/></p>
+                            </div>
+                        </div>
+
+                        <div class="text-center">
+                            <p>Mengetahui,</p>
+                            <p><t t-esc="company_['name']"/></p>
+                            <img src="/custom_delivery/static/img/signature-director.png" style="height: 90px;" />
+                            <p><t t-esc="company_['director_name']"/></p>
+                        </div>
+                    </div>
+                </div>
+            </t>
+        </t>
+    </template>
+
+</odoo>

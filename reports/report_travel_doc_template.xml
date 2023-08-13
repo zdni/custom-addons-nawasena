@@ -1,0 +1,163 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+
+    <template id="report_travel_doc">
+        <t t-call="web.html_container">
+            <t t-call="web.external_layout">
+                <div class="page" style="font-size: 13px !important;">
+                    <div class="oe_structure" />
+                    <center>
+                        <h2><u>SURAT JALAN</u></h2>
+                    </center>
+                    
+                    <div class="row mb-2">
+                        <div class="col-6">
+                            <table style="border: 1px black solid;" class="table table-sm table-bordered">
+                                <tr>
+                                    <td style="border: 1px black solid;">Tanggal</td>
+                                    <td style="border: 1px black solid;">:</td>
+                                    <td style="border: 1px black solid;"><t t-esc="doc_['date']" t-options="{'widget': 'date','format': 'dd MMM yyyy'}"/></td>
+                                </tr>
+                                <tr>
+                                    <td style="border: 1px black solid;">No SJ</td>
+                                    <td style="border: 1px black solid;">:</td>
+                                    <td style="border: 1px black solid;"><t t-esc="doc_['number']"/></td>
+                                </tr>
+                                <tr>
+                                    <td style="border: 1px black solid;">No DO</td>
+                                    <td style="border: 1px black solid;">:</td>
+                                    <td style="border: 1px black solid;"><t t-esc="doc_['do_number']"/></td>
+                                </tr>
+                                <tr>
+                                    <td style="border: 1px black solid;">No SO</td>
+                                    <td style="border: 1px black solid;">:</td>
+                                    <td style="border: 1px black solid;"><t t-esc="doc_['so_number']"/></td>
+                                </tr>
+                            </table>
+                        </div>
+                    </div>
+
+                    <div class="row mb-2">
+                        <div class="col-6">
+                            <table style="border: 1px black solid;" class="table table-sm table-bordered">
+                                <tr>
+                                    <td style="border: 1px black solid;">Kepada</td>
+                                    <td style="border: 1px black solid;">:</td>
+                                    <td style="border: 1px black solid;"><t t-esc="customer['name']"/></td>
+                                </tr>
+                                <tr>
+                                    <td style="border: 1px black solid;">Alamat</td>
+                                    <td style="border: 1px black solid;">:</td>
+                                    <td style="border: 1px black solid;"><t t-esc="customer['address']"/></td>
+                                </tr>
+                                <tr>
+                                    <td style="border: 1px black solid;">No PO</td>
+                                    <td style="border: 1px black solid;">:</td>
+                                    <td style="border: 1px black solid;"><t t-esc="customer['reference']"/></td>
+                                </tr>
+                                <tr>
+                                    <td style="border: 1px black solid;">NPWP</td>
+                                    <td style="border: 1px black solid;">:</td>
+                                    <td style="border: 1px black solid;"><t t-esc="customer['tax']"/></td>
+                                </tr>
+                            </table>
+                        </div>
+                        <div class="col-6">
+                            <table style="border: 1px black solid;" class="table table-sm table-bordered">
+                                <tr>
+                                    <td style="border: 1px black solid;">Agent/Transporter</td>
+                                    <td style="border: 1px black solid;">:</td>
+                                    <td style="border: 1px black solid;"><t t-esc="doc_['company']['name']"/></td>
+                                </tr>
+                                <tr>
+                                    <td style="border: 1px black solid;">Alamat</td>
+                                    <td style="border: 1px black solid;">:</td>
+                                    <td style="border: 1px black solid;"><t t-esc="doc_['company']['address']"/></td>
+                                </tr>
+                                <tr>
+                                    <td style="border: 1px black solid;">NPWP</td>
+                                    <td style="border: 1px black solid;">:</td>
+                                    <td style="border: 1px black solid;"><t t-esc="doc_['company']['tax']"/></td>
+                                </tr>
+                            </table>
+                        </div>
+                    </div>
+
+                    <div class="mb-2">
+                        <table style="border: 1px black solid;" class="table table-sm table-bordered">
+                            <tr>
+                                <td style="border: 1px black solid;" class="text-center" colspan="2">Tanggal Berlaku</td>
+                                <td style="border: 1px black solid;" class="text-center" colspan="2">Produk</td>
+                                <td style="border: 1px black solid;" class="text-center" colspan="2">Kuantitas</td>
+                            </tr>
+                            <tr>
+                                <td style="border: 1px black solid;" class="text-center" colspan="2"><t t-esc="doc_['date']" t-options="{'widget': 'date','format': 'dd MMM yyyy'}"/> s/d <t t-esc="doc_['end_date']" t-options="{'widget': 'date','format': 'dd MMM yyyy'}"/></td>
+                                <td style="border: 1px black solid;" class="text-center" colspan="2"><t t-esc="doc_['product']['name']"/></td>
+                                <td style="border: 1px black solid;" class="text-center" colspan="2"><t t-esc="doc_['product']['qty']"/></td>
+                            </tr>
+                            <tr>
+                                <td style="border: 1px black solid;" rowspan="2">Dikirim dengan</td>
+                                <td style="border: 1px black solid;" rowspan="2"><t t-esc="vehicle['type']"/></td>
+                                <td style="border: 1px black solid;" rowspan="2">Segel Atas <t t-esc="vehicle['top_seal']"/></td>
+                                <td style="border: 1px black solid;">Waktu Muat</td>
+                                <td style="border: 1px black solid;"></td>
+                            </tr>
+                            <tr>
+                                <td style="border: 1px black solid;">Waktu Bongkar</td>
+                                <td style="border: 1px black solid;"></td>
+                            </tr>
+                            <tr>
+                                <td style="border: 1px black solid;" rowspan="2">No. Kendaraan</td>
+                                <td style="border: 1px black solid;" rowspan="2"><t t-esc="vehicle['license_plate']"/></td>
+                                <td style="border: 1px black solid;" rowspan="2">Segel Bawah <t t-esc="vehicle['bottom_seal']"/></td>
+                                <td style="border: 1px black solid;">KM Muat</td>
+                                <td style="border: 1px black solid;"></td>
+                            </tr>
+                            <tr>
+                                <td style="border: 1px black solid;">KM Bongkar</td>
+                                <td style="border: 1px black solid;"></td>
+                            </tr>
+                            <tr>
+                                <td style="border: 1px black solid;">SG Meter</td>
+                                <td style="border: 1px black solid;"><t t-esc="vehicle['gauge_tank']"/></td>
+                                <td style="border: 1px black solid;"></td>
+                                <td style="border: 1px black solid;">KM Akhir</td>
+                                <td style="border: 1px black solid;"></td>
+                            </tr>
+                            <tr>
+                                <td style="border: 1px black solid;">Jumlah (L)</td>
+                                <td style="border: 1px black solid;" colspan="4" class="text-center"><t t-esc="doc_['product']['countable_qty']"/></td>
+                            </tr>
+                        </table>
+                    </div>
+
+                    <div class="clearfix">
+                        <table style="border: 1px black solid;" class="table table-sm table-bordered">
+                            <tr>
+                                <td width="25%" style="border: 1px black solid;" class="text-center">Dibuat Oleh</td>
+                                <td width="25%" style="border: 1px black solid;" class="text-center">Mengetahui</td>
+                                <td width="25%" style="border: 1px black solid;" class="text-center">Penerima</td>
+                                <td width="25%" style="border: 1px black solid;" class="text-center">Pengemudi</td>
+                            </tr>
+                            <tr>
+                                <td width="25%" style="border: 1px black solid; height: 100px;"></td>
+                                <td width="25%" style="border: 1px black solid; height: 100px;" class="text-center">
+                                    <img src="/custom_delivery/static/img/signature-director.png" style="height: 80px; margin-top: 10px"/>
+                                </td>
+                                <td width="25%" style="border: 1px black solid; height: 100px;"></td>
+                                <td width="25%" style="border: 1px black solid; height: 100px;"></td>
+                            </tr>
+                            <tr>
+                                <td width="25%" style="border: 1px black solid;" class="text-center"><t t-esc="doc_['publisher']"/></td>
+                                <td width="25%" style="border: 1px black solid;" class="text-center"><t t-esc="doc_['company']['director_name']"/></td>
+                                <td width="25%" style="border: 1px black solid;" class="text-center"><t t-esc="customer['name']"/></td>
+                                <td width="25%" style="border: 1px black solid;" class="text-center"><t t-esc="driver"/></td>
+                            </tr>
+                        </table>
+                    </div>
+                </div>
+            </t>
+        </t>
+    </template>
+
+</odoo>

@@ -1,0 +1,73 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    
+    <record id="driver_change_vehicle_view_form" model="ir.ui.view">
+        <field name="name">driver.change.vehicle.view.form</field>
+        <field name="model">driver.change.vehicle</field>
+        <field name="arch" type="xml">
+            <form string="Driver Change Vehicle" class="o_sale_order">
+                <sheet>
+                    <div class="oe_title">
+                        <h1>
+                            <field name="name"/>
+                        </h1>
+                    </div>
+                    <group>
+                        <group>
+                            <field name="driver_id"/>
+                            <field name="vehicle_id"/>
+                            <field name="delivery_id" invisible="1"/>
+                            <button name="recalculate_solar_usage" type="object" class="btn btn-sm" string="Re-Calculate Solar Usage" />
+                        </group>
+                    </group>
+                    <group name="seal_number" string="Seal Number">
+                        <field name="seal_number_ids" attrs="{'readonly': [('use_seal', '=', True)]}">
+                            <tree string="Change Vehicle" editable="bottom">
+                                <field name="delivery_id" invisible="1"/>
+                                <field name="change_vehicle_id" invisible="1"/>
+                                <field name="seal_ids"/>
+                                <field name="position"/>
+                            </tree>
+                        </field>
+                        <field name="use_seal" invisible="1"/>
+                    </group>
+                    <group>
+                        <button name="use_seal_number" type="object" class="btn btn-sm btn-primary" string="Use Seal" />
+                    </group>
+                </sheet>
+            </form>
+        </field>
+    </record>
+
+    <record id="driver_change_vehicle_view_tree" model="ir.ui.view">
+        <field name="name">driver.change.vehicle.view.tree</field>
+        <field name="model">driver.change.vehicle</field>
+        <field name="arch" type="xml">
+            <tree string="Driver Change Vehicle" create="false">
+                <field name="name" />
+                <field name="driver_id" />
+                <field name="vehicle_id" />
+            </tree>
+        </field>
+    </record>
+
+    <record id="action_driver_change_vehicle" model="ir.actions.act_window">
+        <field name="name">Driver Change Vehicle</field>
+        <field name="res_model">driver.change.vehicle</field>
+        <field name="view_type">form</field>
+        <field name="view_mode">tree,form</field>
+        <field name="help" type="html">
+            <p class="o_view_nocontent_smiling_face">
+                Create Driver Change Vehicle document from Delivery Driver Document.
+            </p>
+        </field>
+    </record>
+
+    <!-- <menuitem 
+        action="action_driver_change_vehicle" 
+        id="menu_action_driver_change_vehicle" 
+        parent="sale.sale_order_menu" 
+        sequence="10"
+    /> -->
+
+</odoo>

@@ -1,0 +1,43 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+
+    <record id="inv_adj_log_fuel" model="ir.ui.view">
+        <field name="name">fleet.vehicle.log.fuel.view.form.inherit</field>
+        <field name="model">fleet.vehicle.log.fuel</field>
+        <field name="inherit_id" ref="fleet.fleet_vehicle_log_fuel_view_form"/>
+        <field name="arch" type="xml">
+            <xpath expr="//sheet" position="before">
+                <header>
+                    <button name="action_posted" states="draft" string="Post" type="object" class="oe_highlight"/>
+                    <field name="state" widget="statusbar" statusbar_visible="draft,posted"/>
+                </header>
+            </xpath>
+            <field name="vendor_id" position="after">
+                <field name="inv_adj_id" readonly="1"/>
+            </field>
+        </field>
+    </record>
+
+    <record id="fuel_log_action_posted_server" model="ir.actions.server">
+        <field name="name">Posted</field>
+        <field name="model_id" ref="model_fleet_vehicle_log_fuel"/>
+        <field name="binding_model_id" ref="model_fleet_vehicle_log_fuel"/>
+        <field name="state">code</field>
+        <field name="code">
+            for record in records:
+                if record.state == 'draft': record.action_posted()
+        </field>
+    </record>
+
+    <record id="fleet_vehicle_log_fuel_view_search_inherit" model="ir.ui.view">
+        <field name="name">fleet.vehicle.log.fuel.search.inherit</field>
+        <field name="model">fleet.vehicle.log.fuel</field>
+        <field name="inherit_id" ref="fleet.fleet_vehicle_log_fuel_view_search"/>
+        <field name="arch" type="xml">
+            <xpath expr="//group" position="inside">
+                <filter name="groupby_state" context="{'group_by' : 'state'}" string="State"/>
+            </xpath>
+        </field>
+    </record>
+
+</odoo>

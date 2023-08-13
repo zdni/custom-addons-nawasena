@@ -1,0 +1,47 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <data>
+    
+        <report 
+            id="action_report_handover_delivery"
+            string="Handover Delivery"
+            model="delivery.driver"
+            report_type="qweb-pdf"
+            file="custom_delivery.report_handover_delivery" 
+            name="custom_delivery.report_handover_delivery"
+            print_report_name="'Handover Delivery - %s' % (object.name)"
+        />
+        
+        <report 
+            id="action_report_tank_handover"
+            string="Tank Handover"
+            model="delivery.driver"
+            report_type="qweb-pdf"
+            file="custom_delivery.report_tank_handover" 
+            name="custom_delivery.report_tank_handover"
+            print_report_name="'Tank Handover - %s' % (object.name)"
+        />
+
+        <report 
+            id="action_report_travel_doc"
+            string="Travel Document"
+            model="delivery.driver"
+            report_type="qweb-pdf"
+            file="custom_delivery.report_travel_doc" 
+            name="custom_delivery.report_travel_doc"
+            print_report_name="'Travel Document - %s' % (object.name)"
+        />
+
+        <report 
+            id="action_report_travel_doc_xlsx"
+            model="delivery.driver"
+            string="Travel Document"
+            report_type="xlsx"
+            name="custom_delivery.report_travel_doc_xlsx"
+            file="custom_delivery.report_travel_doc_xlsx" 
+            attachment_use="True"
+            print_report_name="'Travel Document'"
+        />
+    
+    </data>
+</odoo>

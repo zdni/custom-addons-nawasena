@@ -1,0 +1,114 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    
+    <record id="delivery_driver_view_form" model="ir.ui.view">
+        <field name="name">delivery.driver.view.form</field>
+        <field name="model">delivery.driver</field>
+        <field name="arch" type="xml">
+            <form string="Delivery Driver" class="o_sale_order">
+                <header>
+                    <button name="print_tank_handover" string="Print Tank Handover" type="object" class="o_sale_print"/>
+                    <button name="print_handover" string="Print Handover" type="object" class="o_sale_print"/>
+                    <button name="print_travel_doc" string="Print Travel Doc" type="object" class="oe_highlight"/>
+                    <button name="action_view_change_vehicle_wizard" string="Change Vehicle" type="object" class="o_sale_print"/>
+                </header>
+                <sheet>
+                    <div class="oe_button_box" name="button_box_vehicle">
+                        <button name="action_view_change_vehicle"
+                            type="object"
+                            class="oe_stat_button"
+                            icon="fa-truck"
+                        >Change Vehicle</button>
+                    </div>
+                    <div class="oe_title">
+                        <h1>
+                            <field name="name" readonly="1" />
+                        </h1>
+                    </div>
+                    <group>
+                        <group>
+                            <field name="delivery_date" readonly="1"/>
+                            <field name="driver_id"/>
+                            <field name="vehicle_id"/>
+                            <field name="order_id" required="1"/>
+                            <field name="fuel_id" attrs="{'invisible': [('fuel_id', '=', False)]}"/>
+                            <field name="end_date" />
+                        </group>
+                        <group string="Handover">
+                            <field name="doc_ids" widget="many2many_tags" options="{'no_create': True}" attrs="{'invisible': [('doc_ids', '=', False)]}" />
+                            <field name="location" required="1"/>
+                        </group>
+                    </group>
+                    <group name="seal_number" string="Seal Number">
+                        <field name="seal_number_ids" attrs="{'readonly': [('use_seal', '=', True)]}">
+                            <tree string="Seal Number" editable="bottom">
+                                <field name="delivery_id" invisible="1"/>
+                                <field name="change_vehicle_id" invisible="1"/>
+                                <field name="seal_ids" widget="many2many_tags"/>
+                                <field name="position"/>
+                            </tree>
+                        </field>
+                        <field name="use_seal" invisible="1"/>
+                    </group>
+                    <button name="use_seal_number" type="object" class="btn btn-sm btn-primary" string="Use Seal" />
+                </sheet>
+                <div class="oe_chatter">
+                    <field name="message_follower_ids" widget="mail_followers"/>
+                    <field name="activity_ids" widget="mail_activity"/>
+                    <field name="message_ids" widget="mail_thread"/>
+                </div>
+            </form>
+        </field>
+    </record>
+
+    <record id="delivery_driver_view_tree" model="ir.ui.view">
+        <field name="name">delivery.driver.view.tree</field>
+        <field name="model">delivery.driver</field>
+        <field name="arch" type="xml">
+            <tree string="Delivery Driver" create="false">
+                <field name="name" />
+                <field name="driver_id" />
+                <field name="vehicle_id" />
+                <field name="order_id" />
+            </tree>
+        </field>
+    </record>
+
+    <record id="view_delivery_driver_filter" model="ir.ui.view">
+        <field name="name">delivery.driver.select</field>
+        <field name="model">delivery.driver</field>
+        <field name="arch" type="xml">
+            <search string="Search Delivery Driver">
+                <field name="name" string="Document" filter_domain="[('name','ilike',self)]"/>
+                <separator/>
+                <group expand="0" string="Group By">
+                    <filter name="group_by_driver_id" string="Driver" context="{'group_by':'driver_id'}"/>
+                    <filter name="group_by_vehicle_id" string="Vehicle" context="{'group_by':'vehicle_id'}"/>
+                    <separator/>
+                    <filter string="Sale Order" name="order" context="{'group_by':'order_id'}"/>
+                </group>
+            </search>
+        </field>
+    </record>
+
+    <record id="action_delivery_driver" model="ir.actions.act_window">
+        <field name="name">Delivery Driver</field>
+        <field name="res_model">delivery.driver</field>
+        <field name="view_type">form</field>
+        <field name="view_mode">tree,form</field>
+        <field name="search_view_id" ref="view_delivery_driver_filter"/>
+        <field name="help" type="html">
+            <p class="o_view_nocontent_smiling_face">
+                Create Delivery Driver document from Tank Handover Document.
+            </p>
+        </field>
+    </record>
+
+    <menuitem 
+        action="action_delivery_driver" 
+        id="menu_action_delivery_driver" 
+        parent="sale.sale_order_menu" 
+        sequence="10"
+    />
+
+</odoo>

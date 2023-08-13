@@ -1,0 +1,43 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <data noupdate="1">
+    <!-- <data> -->
+
+        <!-- Sequences for Tank Handover -->
+        <record id="seq_delivery_driver" model="ir.sequence">
+            <field name="name">Tank Handover Document Sequence</field>
+            <field name="code">tank.handover</field>
+            <field name="prefix">TH/NMS/%(range_year)s/</field>
+            <field eval="1" name="number_next"/>
+            <field eval="1" name="number_increment"/>
+            <field eval="True" name="use_date_range"/>
+            <field eval="False" name="company_id"/>
+            <field name="padding">4</field>
+        </record>
+
+        <!-- Sequences for Delivery Driver -->
+        <record id="seq_tank_handover" model="ir.sequence">
+            <field name="name">Delivery Driver Document Sequence</field>
+            <field name="code">delivery.driver</field>
+            <field name="prefix">DL.DR/NMS/%(range_year)s/</field>
+            <field eval="1" name="number_next"/>
+            <field eval="1" name="number_increment"/>
+            <field eval="True" name="use_date_range"/>
+            <field eval="False" name="company_id"/>
+            <field name="padding">4</field>
+        </record>
+
+        <!-- Sequences for Driver Change Vehicle -->
+        <record id="seq_change_vehicle" model="ir.sequence">
+            <field name="name">Driver Change Vehicle Document Sequence</field>
+            <field name="code">driver.change.vehicle</field>
+            <field name="prefix">CH.VE/NMS/%(range_year)s/</field>
+            <field eval="1" name="number_next"/>
+            <field eval="1" name="number_increment"/>
+            <field eval="True" name="use_date_range"/>
+            <field eval="False" name="company_id"/>
+            <field name="padding">4</field>
+        </record>
+
+    </data>
+</odoo>

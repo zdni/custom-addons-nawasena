@@ -1,0 +1,144 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+
+    <template id="report_tank_handover">
+        <t t-call="web.html_container">
+            <t t-call="web.external_layout">
+                <div class="page" style="font-size: 13px !important;">
+                    <div class="oe_structure" />
+
+                    <center class="mb-2">
+                        <h3><u>BERITA ACARA SERAH TERIMA <t t-esc="product['name']"/></u></h3>
+                    </center>
+
+                    <p><b>BERITA ACARA SERAH TERIMA <t t-esc="product['name']"/></b> ini dibuat pada:</p>
+                    <div class="row">
+                        <table style="border: 1px black solid;" class="table table-sm table-bordered">
+                            <tbody>
+                                <tr>
+                                    <td style="border: 1px black solid;"><b>Hari</b></td>
+                                    <td style="border: 1px black solid;">:</td>
+                                    <td style="border: 1px black solid;"><t t-esc="day"/></td>
+                                </tr>
+                                <tr>
+                                    <td style="border: 1px black solid;"><b>Tanggal</b></td>
+                                    <td style="border: 1px black solid;">:</td>
+                                    <td style="border: 1px black solid;"><t t-esc="date" t-options="{'widget': 'date','format': 'dd MMM yyyy'}"/></td>
+                                </tr>
+                                <tr>
+                                    <td style="border: 1px black solid;"><b>Bertempat di</b></td>
+                                    <td style="border: 1px black solid;">:</td>
+                                    <td style="border: 1px black solid;"><t t-esc="location"/></td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                    
+                    <span>Oleh dan Diantara:</span>
+                    <div class="row mb-2">
+                        <table style="border: 1px black solid;" class="table table-sm table-borderless">
+                            <t t-set="number" t-value="1"/>
+                            <tbody>
+                                <t t-foreach="consignors" t-as="consignor">
+                                    <tr>
+                                        <td style="border: 1px black solid;">(<t t-esc="number"/>)</td>
+                                        <td style="border: 1px black solid;">Nama (Driver)</td>
+                                        <td style="border: 1px black solid;">:</td>
+                                        <td style="border: 1px black solid;"><t t-esc="consignor['name']"/></td>
+                                    </tr>
+                                    <tr>
+                                        <td style="border: 1px black solid;"></td>
+                                        <td style="border: 1px black solid;">Perusahaan</td>
+                                        <td style="border: 1px black solid;">:</td>
+                                        <td style="border: 1px black solid;"><t t-esc="consignor['company_name']"/></td>
+                                    </tr>
+                                    <tr>
+                                        <td style="border: 1px black solid;"></td>
+                                        <td style="border: 1px black solid;">Alamat</td>
+                                        <td style="border: 1px black solid;">:</td>
+                                        <td style="border: 1px black solid;"><t t-esc="consignor['company_address']"/></td>
+                                    </tr>
+                                    <tr>
+                                        <td style="border: 1px black solid;"></td>
+                                        <td style="border: 1px black solid;">Plat</td>
+                                        <td style="border: 1px black solid;">:</td>
+                                        <td style="border: 1px black solid;"><t t-esc="consignor['fleet']"/></td>
+                                    </tr>
+                                    <t t-set="number" t-value="number + 1"/>
+                                </t>
+                                <tr>
+                                    <td style="border: 1px black solid;"></td>
+                                    <td style="border: 1px black solid;" colspan="3">Selanjutnya disebut sebagai <b>“Pihak Pertama”</b></td>
+                                </tr>
+                                <tr>
+                                    <td style="border: 1px black solid;"></td>
+                                </tr>
+                                <tr>
+                                    <td style="border: 1px black solid;">(2)</td>
+                                    <td style="border: 1px black solid;">Nama (Driver)</td>
+                                    <td style="border: 1px black solid;">:</td>
+                                    <td style="border: 1px black solid;"><t t-esc="consignee_driver['name']"/></td>
+                                </tr>
+                                <tr>
+                                    <td style="border: 1px black solid;"></td>
+                                    <td style="border: 1px black solid;">Perusahaan</td>
+                                    <td style="border: 1px black solid;">:</td>
+                                    <td style="border: 1px black solid;"><t t-esc="consignee_driver['company_name']"/></td>
+                                </tr>
+                                <tr>
+                                    <td style="border: 1px black solid;"></td>
+                                    <td style="border: 1px black solid;">Alamat</td>
+                                    <td style="border: 1px black solid;">:</td>
+                                    <td style="border: 1px black solid;"><t t-esc="consignee_driver['company_address']"/></td>
+                                </tr>
+                                <tr>
+                                    <td style="border: 1px black solid;"></td>
+                                    <td style="border: 1px black solid;">Plat</td>
+                                    <td style="border: 1px black solid;">:</td>
+                                    <td style="border: 1px black solid;"><t t-esc="consignee_driver['fleet']"/></td>
+                                </tr>
+                                <tr>
+                                    <td style="border: 1px black solid;"></td>
+                                    <td style="border: 1px black solid;" colspan="3">Selanjutnya disebut sebagai <b>“Pihak Kedua</b></td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+
+                    <span>Pihak Pertama dan Pihak Kedua secara bersama-sama selanjutnya disebut sebagai <b>“Para Pihak”</b> Para Pihak dengan ini menerangkan dan menyatakan hal-hal sebagai berikut:</span>
+                    <ol>
+                        <li><p><b><u>Bahwa Pihak Pertama dengan ini menyerahkan <t t-esc="product['name']"/> sebanyak <t t-esc="product['qty']"/> kepada Pihak Kedua. Dan Pihak Kedua dengan ini menerima <t t-esc="product['name']"/> tersebut dari Pihak Pertama.</u></b></p></li>
+                    </ol>
+
+                    <div class="mb-2">
+                        <p>Demikian Berita Acara ini dibuat di tempat dan pada waktu sebagaimana disebutkan pada bagian awal Berita Acara ini.</p>
+                    </div>
+
+                    <t t-if="consignors_len == 1">
+                        <p class="text-center">Para Pihak,</p>
+                        <div class="row">
+                            <div class="col-5 text-center">
+                                <p class="text-center mb-2">Pihak Pertama</p>
+                                <p class="text-center mt32"><t t-esc="consignors[0]['name']"/></p>
+                            </div>
+                            <div class="col-2"></div>
+                            <div class="col-5">
+                                <p class="text-center mb-2">Pihak Kedua</p>
+                                <p class="text-center mt32"><t t-esc="consignee_driver['name']"/></p>
+                            </div>
+                        </div>    
+                    </t>
+                    <t t-else="">
+                        <div class="text-center">
+                            <p class="text-center mb-2">Mengetahui,</p>
+                            <p>PT. NAWASENA MULTI SARANA</p>
+                            <img src="/custom_delivery/static/img/signature-director.png" style="height: 60px;"/>
+                            <p class="text-center">DEDY KURNIAWAN</p>
+                        </div>
+                    </t>
+                </div>
+            </t>
+        </t>
+    </template>
+
+</odoo>

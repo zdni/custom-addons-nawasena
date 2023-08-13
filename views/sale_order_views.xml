@@ -1,0 +1,57 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+
+    <record id="view_order_form_inherit_sale" model="ir.ui.view">
+        <field name="name">sale.order.view.form.inherit</field>
+        <field name="model">sale.order</field>
+        <field name="inherit_id" ref="sale.view_order_form"/>
+        <field name="arch" type="xml">
+            <xpath expr="//header" position="inside">
+                <button name="act_view_driver_wizard" type="object" string="Driver" class="btn btn-primary" attrs="{'invisible': [('state', 'in', ['draft', 'sent', 'done', 'cancel'])]}"/>
+            </xpath>
+            <xpath expr="//field[@name='client_order_ref']" position="attributes">
+                <attribute name="placeholder" value="PO. ex: PO-XXX">PO. ex: PO-XXX</attribute>
+            </xpath>
+            <field name="payment_term_id" position="after">
+                <field name="is_delivery" attrs="{'readonly': [('state', 'in', ['sale', 'done', 'cancel'])]}" />
+                <button name="calculate_solar_usage" type="object" string="Calculate Solar Usage" class="btn btn-sm" attrs="{'invisible': ['|', ('is_delivery', '=', False), ('state', 'in', ['draft', 'sent', 'done', 'cancel'])]}"/>
+            </field>
+            <xpath expr="//div[@name='button_box']" position="inside">
+                <button name="action_view_driver_handover"
+                    type="object"
+                    class="oe_stat_button"
+                    icon="fa-truck"
+                     attrs="{'invisible': ['|', ('is_delivery', '=', False), ('state', 'in', ['draft', 'sent', 'done', 'cancel'])]}"
+                >Driver Depot</button>
+                <button name="action_view_driver_delivery"
+                    type="object"
+                    class="oe_stat_button"
+                    icon="fa-truck"
+                     attrs="{'invisible': ['|', ('is_delivery', '=', False), ('state', 'in', ['draft', 'sent', 'done', 'cancel'])]}"
+                >Driver Delivery</button>
+            </xpath>
+            <xpath expr="//page[@name='order_lines']" position="after">
+                <page name="delivery_information" string="Delivery" attrs="{'invisible': [('is_delivery', '=', False)]}">
+                    <group string="Information">
+                        <field name="delivery_number" attrs="{'readonly': [('state', 'in', ['sale', 'done', 'cancel'])], 'required': [('is_delivery', '=', True)]}" />
+                        <field name="order_number" attrs="{'readonly': [('state', 'in', ['sale', 'done', 'cancel'])], 'required': [('is_delivery', '=', True)]}" />
+                        <field name="product_delivery_id" attrs="{'readonly': [('state', 'in', ['sale', 'done', 'cancel'])], 'required': [('is_delivery', '=', True)]}" />
+                        <field name="delivery_date" />
+                    </group>
+                </page>
+            </xpath>
+        </field>
+    </record>
+
+    <record id="sale_order_calculate_solar_usage_action_server" model="ir.actions.server">
+        <field name="name">Calculate Solar Usage</field>
+        <field name="model_id" ref="model_sale_order"/>
+        <field name="binding_model_id" ref="model_sale_order"/>
+        <field name="state">code</field>
+        <field name="code">
+            for record in records:
+                record.calculate_solar_usage()
+        </field>
+    </record>
+
+</odoo>

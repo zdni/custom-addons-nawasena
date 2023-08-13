@@ -1,0 +1,45 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+
+    <record id="delivery_driver_wizard_view_form" model="ir.ui.view">
+        <field name="name">delivery.driver.wizard.view.form</field>
+        <field name="model">delivery.driver.wizard</field>
+        <field name="arch" type="xml">
+            <form string="Pickup at Depot">
+                <p class="oe_grey">
+                    Document will be created automatically so that you can review them.
+                </p>
+                <group>
+                    <field name="delivery_date" />
+                    <field name="list_ids">
+                        <tree string="Driver List" editable="bottom">
+                            <field name="doc_id" invisible="1"/>
+                            <field name="driver_id"/>
+                            <field name="vehicle_id"/>
+                            <field name="is_fee"/>
+                            <field name="is_delivery"/>
+                        </tree>
+                    </field>
+                </group>
+                <footer>
+                    <button name="create_docs" string="Create and View Doc" type="object"
+                        context="{'open_docs': True}" class="btn-primary"/>
+                    <button name="create_docs" string="Create Doc" type="object"
+                        class="btn-primary"/>
+                    <button string="Cancel" class="btn-secondary" special="cancel"/>
+                </footer>
+            </form>
+        </field>
+    </record>
+
+    ir<record id="delivery_driver_wizard_action" model="ir.actions.act_window">
+        <field name="name">Pickup at Depot</field>
+        <field name="type">ir.actions.act_window</field>
+        <field name="res_model">delivery.driver.wizard</field>
+        <field name="view_type">form</field>
+        <field name="view_mode">form</field>
+        <field name="target">new</field>
+        <field name="groups_id" eval="[(4,ref('sales_team.group_sale_salesman'))]"/>
+    </record>
+
+</odoo>

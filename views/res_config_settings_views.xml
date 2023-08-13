@@ -1,0 +1,68 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <data>
+    
+        <record id="res_config_settings_view_form" model="ir.ui.view">
+            <field name="name">res.config.settings.view.form.inherit</field>
+            <field name="model">res.config.settings</field>
+            <field name="priority" eval="50"/>
+            <field name="inherit_id" ref="sale.res_config_settings_view_form"/>
+            <field name="arch" type="xml">
+                <xpath expr="//div[@id='sale_config_online_confirmation_sign']" position="after">
+                    <div class="col-xs-12 col-md-6 o_setting_box">
+                        <div class="o_setting_left_pane"/>
+                        <div class="o_setting_right_pane">
+                            <label for="product_usage_id"/>
+                            <div class="text-muted">
+                                Default Product Solar Usage
+                            </div>
+                            <field name="product_usage_id"/>
+                        </div>
+                    </div>
+                    <div class="col-xs-12 col-md-6 o_setting_box">
+                        <div class="o_setting_left_pane"/>
+                        <div class="o_setting_right_pane">
+                            <label for="handover_location"/>
+                            <div class="text-muted">
+                                Default Handover Location
+                            </div>
+                            <field name="handover_location"/>
+                        </div>
+                    </div>
+                    <div class="col-xs-12 col-md-6 o_setting_box">
+                        <div class="o_setting_left_pane"/>
+                        <div class="o_setting_right_pane">
+                            <span class="o_form_label">Vehicle State</span>
+                            <div class="text-muted">
+                                Vehicle State Setting
+                            </div>
+                            <div class="content-group">
+                                <div class="row mt16">
+                                    <label string="Handover State" for="handover_state_id" class="col-lg-3 o_light_label"/>
+                                    <field name="handover_state_id"/>
+                                </div>
+                                <div class="row">
+                                    <label string="Delivery State" for="delivery_state_id" class="col-lg-3 o_light_label"/>
+                                    <field name="delivery_state_id"/>
+                                </div>
+                                <div class="row">
+                                    <label string="Maintenance State" for="maintenance_state_id" class="col-lg-3 o_light_label"/>
+                                    <field name="maintenance_state_id"/>
+                                </div>
+                                <div class="row">
+                                    <label string="Logo Icon" for="logo_icon" class="col-lg-3 o_light_label"/>
+                                    <field widget="image" class="oe_avatar" name="logo_icon"/>
+                                </div>
+                                <div class="row">
+                                    <label string="Signature State" for="signature" class="col-lg-3 o_light_label"/>
+                                    <field widget="image" class="oe_avatar" name="signature"/>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </xpath>
+            </field>
+        </record>
+    
+    </data>
+</odoo>

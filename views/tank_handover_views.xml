@@ -1,0 +1,95 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    
+    <record id="tank_handover_view_form" model="ir.ui.view">
+        <field name="name">tank.handover.view.form</field>
+        <field name="model">tank.handover</field>
+        <field name="arch" type="xml">
+            <form string="Tank Handover" class="o_sale_order">
+                <header>
+                    <button name="action_view_handover_wizard" string="Handover" type="object" class="oe_highlight"/>
+                </header>
+                <sheet>
+                    <div class="oe_button_box" name="button_box_vehicle">
+                        <button name="action_view_handover_doc"
+                            type="object"
+                            class="oe_stat_button"
+                            icon="fa-truck"
+                        >Handover</button>
+                    </div>
+                    <div class="oe_title">
+                        <h1>
+                            <field name="name" readonly="1" />
+                        </h1>
+                    </div>
+                    <group>
+                        <group>
+                            <field name="driver_id"/>
+                            <field name="vehicle_id"/>
+                            <field name="order_ids" widget="many2many_tags" options="{'no_create': True}"/>
+                        </group>
+                        <group>
+                            <field name="is_fee"/>
+                            <field name="delivery_date" readonly="1"/>
+                            <field name="fuel_id" attrs="{'invisible': [('fuel_id', '=', False)]}"/>
+                        </group>
+                    </group>
+                </sheet>
+                <div class="oe_chatter">
+                    <field name="message_follower_ids" widget="mail_followers"/>
+                    <field name="activity_ids" widget="mail_activity"/>
+                    <field name="message_ids" widget="mail_thread"/>
+                </div>
+            </form>
+        </field>
+    </record>
+
+    <record id="tank_handover_view_tree" model="ir.ui.view">
+        <field name="name">tank.handover.view.tree</field>
+        <field name="model">tank.handover</field>
+        <field name="arch" type="xml">
+            <tree string="Tank Handover" create="false">
+                <field name="name" />
+                <field name="driver_id" />
+                <field name="vehicle_id" />
+                <field name="is_fee" />
+            </tree>
+        </field>
+    </record>
+
+    <record id="view_tank_handover_filter" model="ir.ui.view">
+        <field name="name">tank.handover.select</field>
+        <field name="model">tank.handover</field>
+        <field name="arch" type="xml">
+            <search string="Search Tank Handover">
+                <field name="name" string="Document" filter_domain="[('name','ilike',self)]"/>
+                <separator/>
+                <group expand="0" string="Group By">
+                    <filter name="group_by_driver_id" string="Driver" context="{'group_by':'driver_id'}"/>
+                    <filter name="group_by_vehicle_id" string="Vehicle" context="{'group_by':'vehicle_id'}"/>
+                </group>
+            </search>
+        </field>
+    </record>
+
+    <record id="action_tank_handover" model="ir.actions.act_window">
+        <field name="name">Tank Handover</field>
+        <field name="res_model">tank.handover</field>
+        <field name="view_type">form</field>
+        <field name="view_mode">tree,form</field>
+        <field name="search_view_id" ref="view_tank_handover_filter"/>
+        <field name="help" type="html">
+            <p class="o_view_nocontent_smiling_face">
+                Create Tank Handover document from Sale Order Document.
+            </p>
+        </field>
+    </record>
+
+    <menuitem 
+        action="action_tank_handover" 
+        id="menu_action_tank_handover" 
+        parent="sale.sale_order_menu" 
+        sequence="10"
+    />
+
+</odoo>

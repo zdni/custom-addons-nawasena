@@ -1,0 +1,26 @@
+# install pip terlebih dahulu, saya menggunakan python 3 jadi saya install pip3
+sudo apt install python3-pip
+ 
+# dengan pip install module num2words
+sudo pip3 install num2words
+
+
+
+
+# -*- coding: utf-8 -*-
+# import module num2words
+from num2words import num2words
+# nilai yang akan diubah menjadi terbilang
+value = 1234567
+# kita set dalam bahasa indonesia
+result = num2words(value, lang="id")
+# tampilkan hasilnya di console
+print(result)
+ 
+# hasilnya adalah 
+# satu juta dua ratus tiga puluh empat ribu lima ratus enam puluh tujuh
+
+pip install roman
+import roman
+
+roman.toRoman(8)
