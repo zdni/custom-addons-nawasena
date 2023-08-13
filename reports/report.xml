@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <data>
+    
+        <report 
+            id="action_report_pr_expenses"
+            string="Payment Request Expenses"
+            model="pr.expense"
+            report_type="qweb-pdf"
+            file="pr_expenses.report_pr_expenses" 
+            name="pr_expenses.report_pr_expenses"
+            print_report_name="(object.name)"
+        />
+    
+    </data>
+</odoo>
