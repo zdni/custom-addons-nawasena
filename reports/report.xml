@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <data>
+    
+        <report 
+            id="action_report_pr_account_invoice"
+            string="Payment Request"
+            model="pr.account.invoice"
+            report_type="qweb-pdf"
+            file="pr_invoice.report_pr_account_invoice" 
+            name="pr_invoice.report_pr_account_invoice"
+            print_report_name="(object.name)"
+        />
+    
+    </data>
+</odoo>

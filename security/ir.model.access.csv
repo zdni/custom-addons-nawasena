@@ -1,0 +1,3 @@
+id,name,model_id/id,group_id/id,perm_read,perm_write,perm_create,perm_unlink
+pr_account_invoice_access_right,pr_account_invoice_access_right,model_pr_account_invoice,base.group_user,1,1,1,1
+prl_account_invoice_access_right,prl_account_invoice_access_right,model_prl_account_invoice,base.group_user,1,1,1,1

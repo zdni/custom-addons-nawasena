@@ -1,0 +1,106 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+
+    <record id="pr_account_invoice_view_tree" model="ir.ui.view">
+        <field name="name">pr.account.invoice.view.tree</field>
+        <field name="model">pr.account.invoice</field>
+        <field name="arch" type="xml">
+            <tree string="Vendor Bills" decoration-bf="message_needaction==True" decoration-muted="state=='cancel'">
+                <field name="message_needaction" invisible="1"/>
+                <field name="name"/>
+                <field name="amount_total" />
+                <field name="remaining_amount" />
+                <field name="state" />
+            </tree>
+        </field>
+    </record>
+
+    <record id="pr_account_invoice_view_form_inherit_payment_request" model="ir.ui.view">
+        <field name="name">pr.account.invoice.view.form.inherit</field>
+        <field name="model">pr.account.invoice</field>
+        <field name="inherit_id" ref="payment_request.payment_request_view_form"/>
+        <field name="arch" type="xml">
+            <xpath expr="//page[@name='lines']//field[@name='line_ids']//tree//field[@name='name']" position="replace">
+                <field name="name" invisible="1"/>
+                <field name="bill_id"/>
+            </xpath>
+            <xpath expr="//header" position="inside">
+                <button name="action_done" states="approved" type="object" string="Done"/>
+                <button name="print_doc" states="draft,approved,done" type="object" string="Print"/>
+            </xpath>
+            <field name="amount" position="after">
+                <field name="payment_amount"/>
+            </field>
+            <xpath expr="//page[@name='other_info']" position="inside">
+                <group>
+                    <div class="text-muted">
+                        Set Start Date and End Date to generate payment request for Vendor Bills from between Date.
+                    </div>
+                    <field name="start_date" attrs="{'readonly': [('state', '!=', 'draft')]}" />
+                    <field name="end_date" attrs="{'readonly': [('state', '!=', 'draft')]}" />
+                    <button name="generate" string="Generate" type="object" states="draft" class="btn-sm"/>
+                </group>
+            </xpath>
+        </field>
+    </record>
+
+    <record id="view_pr_account_invoice_filter" model="ir.ui.view">
+        <field name="name">pr.account.invoice.list.select</field>
+        <field name="model">pr.account.invoice</field>
+        <field name="priority" eval="15"/>
+        <field name="arch" type="xml">
+            <search string="Search Vendor Bills">
+                <field name="name" string="Vendor Bills" filter_domain="[('name','ilike',self)]"/>
+                <field name="user_id"/>
+                <filter string="My Request" domain="[('user_id','=',uid)]" name="my_pr_account_invoices_filter"/>
+                <separator/>
+                <group expand="0" string="Group By">
+                    <filter string="Submitter" name="submitter" domain="[]" context="{'group_by':'user_id'}"/>
+                    <filter string="State" name="state" domain="[]" context="{'group_by':'state'}"/>
+                </group>
+            </search>
+        </field>
+    </record>
+
+    <record id="action_pr_account_invoice" model="ir.actions.act_window">
+        <field name="name">Vendor Bills</field>
+        <field name="type">ir.actions.act_window</field>
+        <field name="res_model">pr.account.invoice</field>
+        <field name="view_mode">tree,form</field>
+        <field name="view_type">form</field>
+        <field name="view_mode">tree,form</field>
+        <field name="search_view_id" ref="view_pr_account_invoice_filter"/>
+        <field name="context">{'search_default_state': 1}</field>
+        <field name="domain">[]</field>
+        <field name="help" type="html">
+            <p class="o_view_nocontent_smiling_face">
+                Create a new draft, the first step of a new request!
+            </p><p>
+                Once the draft is confirmed, it becomes a payment request for Vendor Bills.
+            </p>
+        </field>
+    </record>
+
+    <record id="pr_account_invoice_action_view_draft_tree" model="ir.actions.act_window.view">
+        <field name="sequence" eval="1"/>
+        <field name="view_mode">tree</field>
+        <field name="view_id" ref="pr_invoice.pr_account_invoice_view_tree"/>
+        <field name="act_window_id" ref="action_pr_account_invoice"/>
+    </record>
+
+    <record id="pr_account_invoice_action_view_draft_form" model="ir.actions.act_window.view">
+        <field name="sequence" eval="3"/>
+        <field name="view_mode">form</field>
+        <field name="view_id" ref="pr_invoice.pr_account_invoice_view_form_inherit_payment_request"/>
+        <field name="act_window_id" ref="action_pr_account_invoice"/>
+    </record>
+
+    <menuitem
+        id="menu_payment_request_account_invoice"
+        name="Bills"
+        action="action_pr_account_invoice"
+        parent="payment_request.payment_request_menu_root"
+        sequence="10"
+    />
+
+</odoo>
