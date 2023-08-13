@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+
+    <menuitem
+        id="payment_request_menu_root"
+        name="Payment"
+        parent="account.menu_finance"
+        sequence="10"/>
+
+</odoo>

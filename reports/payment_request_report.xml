@@ -1,0 +1,62 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+
+    <template id="report_payment_request">
+        <t t-call="web.html_container">
+            <t t-call="web.external_layout">
+                <div class="page">
+                    <div class="oe_structure" />
+
+                    <h3>Payment Request</h3>
+                    <h4><t t-esc="docs.name"/></h4>
+
+                    <table>
+                        <tr>
+                            <th>Tanggal Buat</th>
+                            <td><t t-esc="docs.create_date"/></td>
+                        </tr>
+                        <tr>
+                            <th>Yang Mengajukan</th>
+                            <td><t t-esc="docs.user_id.name"/></td>
+                        </tr>
+                        <t t-if="docs.approver_id != False">
+                            <tr>
+                                <th>Menyetujui</th>
+                                <td><t t-esc="docs.approver_id.name"/></td>
+                            </tr>
+                        </t>
+                    </table>
+
+                    <table>
+                        <thead>
+                            <th>Deskripsi</th>
+                            <th>Total</th>
+                            <th>Status</th>
+                        </thead>
+                        <tbody>
+                            <t t-foreach="docs.line_ids" t-as="line">
+                                <tr>
+                                    <td><t t-esc="line.name"/></td>
+                                    <td><t t-esc="line.amount"/></td>
+                                    <td><t t-esc="line.state"/></td>
+                                </tr>
+                            </t>
+                        </tbody>
+                    </table>
+
+                    <table>
+                        <tr>
+                            <th>Total</th>
+                            <td><t t-esc="dosc.amount_total"/></td>
+                        </tr>
+                        <tr>
+                            <th>Total</th>
+                            <td><t t-esc="dosc.remaining_amount"/></td>
+                        </tr>
+                    </table>
+                </div>
+            </t>
+        </t>
+    </template>
+
+</odoo>

@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <data>
+    
+        <report 
+            id="action_report_payment_request"
+            string="Payment Request"
+            model="payment.request"
+            report_type="qweb-pdf"
+            file="payment_request.report_payment_request" 
+            name="payment_request.report_payment_request"
+            print_report_name="'Payment Request - %s' % (object.name)"
+        />
+    
+    </data>
+</odoo>

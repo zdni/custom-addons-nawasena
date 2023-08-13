@@ -1,0 +1,3 @@
+id,name,model_id/id,group_id/id,perm_read,perm_write,perm_create,perm_unlink
+payment_request_access_right,payment_request_access_right,model_payment_request,base.group_user,1,1,1,1
+payment_request_line_access_right,payment_request_line_access_right,model_payment_request_line,base.group_user,1,1,1,1
