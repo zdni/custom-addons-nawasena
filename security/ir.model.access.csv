@@ -1,0 +1,3 @@
+id,name,model_id/id,group_id/id,perm_read,perm_write,perm_create,perm_unlink
+setting_product_pricelist_access_right,setting_product_pricelist_access_right,model_setting_product_pricelist,sales_team.group_sale_manager,1,1,1,1
+solar_usage_delivery_access_right,solar_usage_delivery_access_right,model_solar_usage_delivery,sales_team.group_sale_manager,1,1,1,1

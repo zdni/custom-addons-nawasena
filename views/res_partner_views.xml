@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+
+    <record id="view_partner_form_inherit_base" model="ir.ui.view">
+        <field name="name">res.partner.view.form.inherit</field>
+        <field name="model">res.partner</field>
+        <field name="inherit_id" ref="base.view_partner_form"/>
+        <field name="arch" type="xml">
+            <xpath expr="//notebook" position="inside">
+                <page name="delivery" string="Delivery" attrs="{'invisible': [('customer', '=', False)]}">
+                    <group>
+                        <field name="oat" />
+                        <field name="mileage" />
+                        <field name="access_road_conditions" />
+                        <field name="solar_usage_ids"
+                            widget="section_and_note_one2many"
+                            mode="tree"
+                        >
+                            <tree string="Delivery" editable="bottom">
+                                <field name="customer_id" invisible="1"/>
+                                <field name="capacity_id" />
+                                <field name="solar_usage" />
+                                <field name="fee" />
+                            </tree>
+                        </field>
+                    </group>
+                </page>
+            </xpath>
+        </field>
+    </record>
+
+</odoo>
