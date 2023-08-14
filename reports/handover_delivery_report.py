@@ -36,7 +36,11 @@ class HandoverDeliveryReport(models.AbstractModel):
         # get gauge tank
         gauge_tank_log = self.env['fleet.gauge.tank.log'].search([
             ('vehicle_id', '=', vehicle.id)
-        ], limit=1, order='id desc')
+        ])
+        gauge_tank = []
+        for line in gauge_tank_log:
+            gauge_tank.append(str(line.value).replace('.', ','))
+
         
         return {
             'doc_model': 'delivery.driver',
@@ -52,7 +56,7 @@ class HandoverDeliveryReport(models.AbstractModel):
             'vehicle': {
                 'license_plate': vehicle.license_plate,
                 'tank_capacity': str(int(vehicle.capacity_id.name)) + " L",
-                'gauge_tank': str(gauge_tank_log.value).replace('.', ',') or '0'
+                'gauge_tank': '%s' % ('/ '.join(gauge_tank)) or '0'
             },
             'conditions': conditions,
             'company_': {

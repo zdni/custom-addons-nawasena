@@ -14,9 +14,9 @@
                         <div class="col-6">
                             <table style="border: 1px black solid;" class="table table-sm table-bordered">
                                 <tr>
-                                    <td style="border: 1px black solid;">Tanggal</td>
-                                    <td style="border: 1px black solid;">:</td>
-                                    <td style="border: 1px black solid;"><t t-esc="doc_['date']" t-options="{'widget': 'date','format': 'dd MMM yyyy'}"/></td>
+                                    <th style="border: 1px black solid; font-weight: normal;">Tanggal</th>
+                                    <th style="border: 1px black solid; font-weight: normal;">:</th>
+                                    <th style="border: 1px black solid; font-weight: normal;"><t t-esc="doc_['date']" t-options="{'widget': 'date','format': 'dd MMM yyyy'}"/></th>
                                 </tr>
                                 <tr>
                                     <td style="border: 1px black solid;">No SJ</td>
@@ -41,9 +41,9 @@
                         <div class="col-6">
                             <table style="border: 1px black solid;" class="table table-sm table-bordered">
                                 <tr>
-                                    <td style="border: 1px black solid;">Kepada</td>
-                                    <td style="border: 1px black solid;">:</td>
-                                    <td style="border: 1px black solid;"><t t-esc="customer['name']"/></td>
+                                    <th style="border: 1px black solid; font-weight: normal;">Kepada</th>
+                                    <th style="border: 1px black solid; font-weight: normal;">:</th>
+                                    <th style="border: 1px black solid; font-weight: normal;"><t t-esc="customer['name']"/></th>
                                 </tr>
                                 <tr>
                                     <td style="border: 1px black solid;">Alamat</td>
@@ -65,9 +65,9 @@
                         <div class="col-6">
                             <table style="border: 1px black solid;" class="table table-sm table-bordered">
                                 <tr>
-                                    <td style="border: 1px black solid;">Agent/Transporter</td>
-                                    <td style="border: 1px black solid;">:</td>
-                                    <td style="border: 1px black solid;"><t t-esc="doc_['company']['name']"/></td>
+                                    <th style="border: 1px black solid; font-weight: normal;">Agent/Transporter</th>
+                                    <th style="border: 1px black solid; font-weight: normal;">:</th>
+                                    <th style="border: 1px black solid; font-weight: normal;"><t t-esc="doc_['company']['name']"/></th>
                                 </tr>
                                 <tr>
                                     <td style="border: 1px black solid;">Alamat</td>
@@ -86,16 +86,16 @@
                     <div class="mb-2">
                         <table style="border: 1px black solid;" class="table table-sm table-bordered">
                             <tr>
-                                <td style="border: 1px black solid;" class="text-center" colspan="2">Tanggal Berlaku</td>
-                                <td style="border: 1px black solid;" class="text-center" colspan="2">Produk</td>
-                                <td style="border: 1px black solid;" class="text-center" colspan="2">Kuantitas</td>
+                                <td style="border: 1px black solid; background-color: #D9E1F2 !important;" class="text-center" colspan="2">Tanggal Berlaku</td>
+                                <td style="border: 1px black solid; background-color: #D9E1F2 !important;" class="text-center" colspan="2">Produk</td>
+                                <td style="border: 1px black solid; background-color: #D9E1F2 !important;" class="text-center" colspan="2">Kuantitas</td>
                             </tr>
                             <tr>
                                 <td style="border: 1px black solid;" class="text-center" colspan="2"><t t-esc="doc_['date']" t-options="{'widget': 'date','format': 'dd MMM yyyy'}"/> s/d <t t-esc="doc_['end_date']" t-options="{'widget': 'date','format': 'dd MMM yyyy'}"/></td>
                                 <td style="border: 1px black solid;" class="text-center" colspan="2"><t t-esc="doc_['product']['name']"/></td>
                                 <td style="border: 1px black solid;" class="text-center" colspan="2"><t t-esc="doc_['product']['qty']"/></td>
                             </tr>
-                            <tr>
+                            <tr style="background-color: rgba(255,255,255,0.1) !important;">
                                 <td style="border: 1px black solid;" rowspan="2">Dikirim dengan</td>
                                 <td style="border: 1px black solid;" rowspan="2"><t t-esc="vehicle['type']"/></td>
                                 <td style="border: 1px black solid;" rowspan="2">Segel Atas <t t-esc="vehicle['top_seal']"/></td>
@@ -106,7 +106,7 @@
                                 <td style="border: 1px black solid;">Waktu Bongkar</td>
                                 <td style="border: 1px black solid;"></td>
                             </tr>
-                            <tr>
+                            <tr style="background-color: rgba(255,255,255,0.1) !important;">
                                 <td style="border: 1px black solid;" rowspan="2">No. Kendaraan</td>
                                 <td style="border: 1px black solid;" rowspan="2"><t t-esc="vehicle['license_plate']"/></td>
                                 <td style="border: 1px black solid;" rowspan="2">Segel Bawah <t t-esc="vehicle['bottom_seal']"/></td>
@@ -117,7 +117,7 @@
                                 <td style="border: 1px black solid;">KM Bongkar</td>
                                 <td style="border: 1px black solid;"></td>
                             </tr>
-                            <tr>
+                            <tr style="background-color: rgba(255,255,255,0.1) !important;">
                                 <td style="border: 1px black solid;">SG Meter</td>
                                 <td style="border: 1px black solid;"><t t-esc="vehicle['gauge_tank']"/></td>
                                 <td style="border: 1px black solid;"></td>
@@ -134,10 +134,10 @@
                     <div class="clearfix">
                         <table style="border: 1px black solid;" class="table table-sm table-bordered">
                             <tr>
-                                <td width="25%" style="border: 1px black solid;" class="text-center">Dibuat Oleh</td>
-                                <td width="25%" style="border: 1px black solid;" class="text-center">Mengetahui</td>
-                                <td width="25%" style="border: 1px black solid;" class="text-center">Penerima</td>
-                                <td width="25%" style="border: 1px black solid;" class="text-center">Pengemudi</td>
+                                <td width="25%" style="border: 1px black solid; background-color: #D9E1F2 !important;" class="text-center">Dibuat Oleh</td>
+                                <td width="25%" style="border: 1px black solid; background-color: #D9E1F2 !important;" class="text-center">Mengetahui</td>
+                                <td width="25%" style="border: 1px black solid; background-color: #D9E1F2 !important;" class="text-center">Penerima</td>
+                                <td width="25%" style="border: 1px black solid; background-color: #D9E1F2 !important;" class="text-center">Pengemudi</td>
                             </tr>
                             <tr>
                                 <td width="25%" style="border: 1px black solid; height: 100px;"></td>

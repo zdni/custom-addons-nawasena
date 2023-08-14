@@ -118,22 +118,22 @@
                         <p class="text-center">Para Pihak,</p>
                         <div class="row">
                             <div class="col-5 text-center">
-                                <p class="text-center mb-2">Pihak Pertama</p>
-                                <p class="text-center mt32"><t t-esc="consignors[0]['name']"/></p>
+                                <p class="text-center mb-2" style="height: 100px;">Pihak Pertama</p>
+                                <p class="text-center"><t t-esc="consignors[0]['name']"/></p>
                             </div>
                             <div class="col-2"></div>
                             <div class="col-5">
-                                <p class="text-center mb-2">Pihak Kedua</p>
-                                <p class="text-center mt32"><t t-esc="consignee_driver['name']"/></p>
+                                <p class="text-center mb-2" style="height: 100px;">Pihak Kedua</p>
+                                <p class="text-center"><t t-esc="consignee_driver['name']"/></p>
                             </div>
                         </div>    
                     </t>
                     <t t-else="">
                         <div class="text-center">
-                            <p class="text-center mb-2">Mengetahui,</p>
-                            <p>PT. NAWASENA MULTI SARANA</p>
+                            <p class="text-center mb-0">Mengetahui,</p>
+                            <p class="mb-0">PT. NAWASENA MULTI SARANA</p>
                             <img src="/custom_delivery/static/img/signature-director.png" style="height: 60px;"/>
-                            <p class="text-center">DEDY KURNIAWAN</p>
+                            <p class="text-center mb-0">DEDY KURNIAWAN</p>
                         </div>
                     </t>
                 </div>

@@ -16,13 +16,13 @@
                         <p>Pada tanggal <t t-esc="date" t-options="{'widget': 'date','format': 'dd MMM yyyy'}"/> telah dilakukan proses penerimaan <t t-esc="product['name']"/> dari:</p>
                     </div>
                     <div class="row mb-2">
-                        <div class="col-5">
+                        <div class="col-7">
                             <table style="border: 1px black solid;" class="table table-sm table-bordered">
                                 <tbody>
                                     <tr>
-                                        <td style="border: 1px black solid;"><b>No. Polisi</b></td>
-                                        <td style="border: 1px black solid;">:</td>
-                                        <td class="text-right" style="border: 1px black solid; white-space: text-nowrap;"><t t-esc="vehicle['license_plate']"/></td>
+                                        <th style="border: 1px black solid;"><b>No. Polisi</b></th>
+                                        <th style="border: 1px black solid; font-weight: normal;">:</th>
+                                        <th class="text-right" style="border: 1px black solid; white-space: text-nowrap; font-weight: normal;"><t t-esc="vehicle['license_plate']"/></th>
                                     </tr>
                                     <tr>
                                         <td style="border: 1px black solid;"><b>Kapasitas Mobil Tangki</b></td>
@@ -45,28 +45,30 @@
                     </div>
 
                     <div class="row mb-2">
-                        <table style="border: 1px black solid;" class="table table-sm table-bordered">
-                            <thead>
-                                <tr>
-                                    <th style="border: 1px black solid;">No</th>
-                                    <th style="border: 1px black solid;">Kondisi Tangki</th>
-                                    <th style="border: 1px black solid;">Ya/Baik</th>
-                                    <th style="border: 1px black solid;">Tidak</th>
-                                </tr>
-                            </thead>
-                            <tbody>
-                                <t t-set="number" t-value="0"/>
-                                <t t-foreach="conditions" t-as="condition">
-                                    <t t-set="number" t-value="number + 1"/>
+                        <div class="col-12">
+                            <table style="border: 1px black solid;" class="table table-sm table-bordered">
+                                <thead>
                                     <tr>
-                                        <td style="border: 1px black solid;"><t t-esc="number"/></td>
-                                        <td style="border: 1px black solid;"><t t-esc="condition"/></td>
-                                        <td style="border: 1px black solid;"></td>
-                                        <td style="border: 1px black solid;"></td>
+                                        <th class="text-center" style="border: 1px black solid;">No</th>
+                                        <th class="text-center" style="border: 1px black solid;">Kondisi Tangki</th>
+                                        <th class="text-center" style="border: 1px black solid;">Ya/Baik</th>
+                                        <th class="text-center" style="border: 1px black solid;">Tidak</th>
                                     </tr>
-                                </t>
-                            </tbody>
-                        </table>
+                                </thead>
+                                <tbody>
+                                    <t t-set="number" t-value="0"/>
+                                    <t t-foreach="conditions" t-as="condition">
+                                        <t t-set="number" t-value="number + 1"/>
+                                        <tr>
+                                            <th style="border: 1px black solid; font-weight: normal;"><t t-esc="number"/></th>
+                                            <th style="border: 1px black solid; font-weight: normal;"><t t-esc="condition"/></th>
+                                            <th style="border: 1px black solid; font-weight: normal;"></th>
+                                            <th style="border: 1px black solid; font-weight: normal;"></th>
+                                        </tr>
+                                    </t>
+                                </tbody>
+                            </table>
+                        </div>
                     </div>
 
                     <p>Setelah dilakukan <i>visual check</i> <t t-esc="product['name']"/>, maka dinyatakan bahwa barang tersebut: </p>
@@ -80,11 +82,11 @@
                     <p>Demikian berita acara penerimaan <t t-esc="product['name']"/> ini dibuat dengan sebenar-benarnya agar dapat digunakan sebagaimana mestinya.</p>
 
                     <div class="clearfix">
-                        <div class="row">
+                        <div class="row mb-2">
                             <div class="col-6 text-center">
                                 <p>Yang Menyerahkan</p>
                                 <p style="height: 80px;"><t t-esc="company_['name']"/></p>
-                                <p><t t-esc="driver['name']"/></p>
+                                <p class="mb-0"><t t-esc="driver['name']"/></p>
                                 <p>Driver</p>
                             </div>
                             <div class="col-6 text-center">
@@ -95,7 +97,7 @@
                         </div>
 
                         <div class="text-center">
-                            <p>Mengetahui,</p>
+                            <p class="mb-0">Mengetahui,</p>
                             <p><t t-esc="company_['name']"/></p>
                             <img src="/custom_delivery/static/img/signature-director.png" style="height: 90px;" />
                             <p><t t-esc="company_['director_name']"/></p>

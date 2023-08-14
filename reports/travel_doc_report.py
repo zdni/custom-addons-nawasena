@@ -30,9 +30,12 @@ class TravelDocReport(models.AbstractModel):
         if len(docs.change_vehicle_ids) > 0:
             vehicle = docs.change_vehicle_ids[len(docs.change_vehicle_ids)-1].vehicle_id
         # get gauge tank
-        gauge_tank = self.env['fleet.gauge.tank.log'].search([
+        gauge_tank_log = self.env['fleet.gauge.tank.log'].search([
             ('vehicle_id.id', '=', vehicle.id),
-        ], limit=1, order='id desc')
+        ])
+        gauge_tank = []
+        for line in gauge_tank_log:
+            gauge_tank.append(str(line.value))
         # seal number
         seal_number_ids = docs.seal_number_ids
         if len(docs.change_vehicle_ids) > 0:
@@ -87,7 +90,7 @@ class TravelDocReport(models.AbstractModel):
             'vehicle': {
                 'type': vehicle.model_id.name,
                 'license_plate': vehicle.license_plate,
-                'gauge_tank': gauge_tank.value,
+                'gauge_tank': '%s' % ('/ '.join(gauge_tank)) or '0',
                 'top_seal': '%s' % (', '.join(top_seal)),
                 'bottom_seal': '%s' % (', '.join(bottom_seal)),
             }
