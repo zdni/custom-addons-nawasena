@@ -22,13 +22,16 @@ class TankHandoverReport(models.AbstractModel):
         consignors = []
         consignors_name = []
         for handover in docs.doc_ids:
-            consignors.append({
-                'name': handover.driver_id.name,
-                'company_name': handover.driver_id.company_id.name,
-                'company_address': handover.driver_id.company_id.street,
-                'fleet': handover.vehicle_id.license_plate
-            })
-            consignors_name.append(handover.driver_id.name)
+            if handover.driver_id.name in consignors_name:
+                pass
+            else:
+                consignors.append({
+                    'name': handover.driver_id.name,
+                    'company_name': handover.driver_id.company_id.name,
+                    'company_address': handover.driver_id.company_id.street,
+                    'fleet': handover.vehicle_id.license_plate
+                })
+                consignors_name.append(handover.driver_id.name)
 
         # consignee_driver
         consignee_driver = {

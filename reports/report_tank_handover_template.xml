@@ -70,11 +70,11 @@
                                     <td style="border: 1px black solid;"></td>
                                     <td style="border: 1px black solid;" colspan="3">Selanjutnya disebut sebagai <b>“Pihak Pertama”</b></td>
                                 </tr>
-                                <tr>
+                                <!-- <tr>
                                     <td style="border: 1px black solid;"></td>
-                                </tr>
+                                </tr> -->
                                 <tr>
-                                    <td style="border: 1px black solid;">(2)</td>
+                                    <td style="border: 1px black solid;">(<t t-esc="number"/>)</td>
                                     <td style="border: 1px black solid;">Nama (Driver)</td>
                                     <td style="border: 1px black solid;">:</td>
                                     <td style="border: 1px black solid;"><t t-esc="consignee_driver['name']"/></td>
