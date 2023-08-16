@@ -128,6 +128,8 @@ class ProjectReportXls(models.AbstractModel):
                 ('delivery_date', '<=', end_date),
             ])
             for order in orders:
+                qty = order.order_line[0].product_uom_qty
+                price_unit = order.order_line[0].price_unit
                 already = False
                 partner = order.partner_shipping_id
                 
@@ -160,8 +162,8 @@ class ProjectReportXls(models.AbstractModel):
                         'plate': vehicle.license_plate,
                         'destination': (partner.parent_id.name or ''),
                         'location': (partner.street or '') + ' ' + (partner.city or ''),
-                        'qty': vehicle.capacity_id.name,
-                        'oat': order.amount_total/int(vehicle.capacity_id.name),
+                        'qty': qty,
+                        'oat': price_unit,
                         'total': order.amount_total,
                         'solar_usage': delivery.fuel_id.amount or 0,
                         'fee': fee or 0,
@@ -175,7 +177,6 @@ class ProjectReportXls(models.AbstractModel):
                         datas[customer.name] = [data]
 
                 if not already:
-                    qty = order.order_line[0].product_uom_qty
                     data = {
                         'date': order.delivery_date,
                         'order_number': order.order_number,
@@ -186,7 +187,7 @@ class ProjectReportXls(models.AbstractModel):
                         'destination': (partner.parent_id.name or ''),
                         'location': (partner.street or '') + ' ' + (partner.city or ''),
                         'qty': qty,
-                        'oat': order.amount_total/int(vehicle.capacity_id.name),
+                        'oat': price_unit,
                         'total': order.amount_total,
                         'solar_usage': 0,
                         'fee': 0,
