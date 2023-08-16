@@ -56,7 +56,7 @@ class PRFeeDriver(models.Model):
                     'credit': line.amount,
                 }
                 debit_line = {
-                    'account_id': journal.default_debit_account_id.id,
+                    'account_id': journal_fee.default_credit_account_id.id,
                     'name': journal_fee.default_credit_account_id.name,
                     'debit': line.amount,
                     'credit': 0,
