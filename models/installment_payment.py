@@ -32,7 +32,7 @@ class InstallmentsPayment(models.Model):
             paid_off = 0
             for line in doc.line_ids:
                 if line.state != 'open':
-                    paid_off += doc.installments
+                    paid_off += line.main_debt
             
             doc.update({ 'remaining': doc.main_debt - paid_off })
 

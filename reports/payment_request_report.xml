@@ -21,27 +21,29 @@
                                     <th>Payment</th>
                                     <th>Keterangan</th>
                                     <th>Jatuh Tempo</th>
-                                    <th>Amount</th>
-                                    <th>Bunga</th>
-                                    <th>Total</th>
-                                    <th>Status</th>
+                                    <th class="text-right">Hut. Pokok</th>
+                                    <th class="text-right">Bunga</th>
+                                    <th class="text-right">Total</th>
+                                    <th class="text-right">Pembayaran</th>
                                 </tr>
                             </thead>
                             <tbody>
                                 <t t-set="number" t-value="0"/>
                                 <t t-set="total_installments" t-value="0"/>
+                                <t t-set="corr_amount" t-value="0"/>
                                 <t t-foreach="docs.line_ids" t-as="line">
                                     <t t-set="number" t-value="number + 1"/>
                                     <t t-set="total_installments" t-value="total_installments + line.total_installments"/>
-                                    <tr>
+                                    <t t-set="corr_amount" t-value="corr_amount + line.corr_amount"/>
+                                    <tr style="border: 1px solid #DEE2E6 !important;">
                                         <td><t t-esc="number"/></td>
                                         <td><t t-esc="line.installments_id.doc_id.name"/></td>
-                                        <td><t t-esc="line.installments_id.name"/></td>
+                                        <td>Angsuran ke <t t-esc="line.installments_id.order"/>/<t t-esc="line.installments_id.doc_id.tenor"/></td>
                                         <td><t t-esc="line.installments_id.payment_date" t-options="{'widget': 'date','format': 'dd MMM yyyy'}"/></td>
-                                        <td><t t-esc="line.amount" t-options="{'widget': 'monetary', 'display_currency': res_company.currency_id}"/></td>
-                                        <td><t t-esc="line.interest_amount" t-options="{'widget': 'monetary', 'display_currency': res_company.currency_id}"/></td>
-                                        <td><t t-esc="line.total_installments" t-options="{'widget': 'monetary', 'display_currency': res_company.currency_id}"/></td>
-                                        <td><t t-esc="state[line.state]"/></td>
+                                        <td class="text-right"><t t-esc="line.amount" t-options="{'widget': 'monetary', 'display_currency': res_company.currency_id}"/></td>
+                                        <td class="text-right"><t t-esc="line.interest_amount" t-options="{'widget': 'monetary', 'display_currency': res_company.currency_id}"/></td>
+                                        <td class="text-right"><t t-esc="line.total_installments" t-options="{'widget': 'monetary', 'display_currency': res_company.currency_id}"/></td>
+                                        <td class="text-right"><t t-esc="line.corr_amount" t-options="{'widget': 'monetary', 'display_currency': res_company.currency_id}"/></td>
                                     </tr>
                                 </t>
                             </tbody>
@@ -54,7 +56,11 @@
                             <table class="table table-sm table-bordered">
                                 <tr>
                                     <th>Total</th>
-                                    <td><t t-esc="total_installments" t-options="{'widget': 'monetary', 'display_currency': res_company.currency_id}"/></td>
+                                    <td class="text-right"><t t-esc="total_installments" t-options="{'widget': 'monetary', 'display_currency': res_company.currency_id}"/></td>
+                                </tr>
+                                <tr>
+                                    <th>Total Pembayaran</th>
+                                    <td class="text-right"><t t-esc="corr_amount" t-options="{'widget': 'monetary', 'display_currency': res_company.currency_id}"/></td>
                                 </tr>
                             </table>
                         </div>
@@ -62,22 +68,24 @@
 
                     <table class="table table-sm table-bordered">
                         <tr>
-                            <th>Dibuat Oleh</th>
-                            <th>Payment</th>
-                            <th>Checked</th>
-                            <th>Approved</th>
+                            <th class="text-center">Dibuat Oleh</th>
+                            <th class="text-center">Payment</th>
+                            <th class="text-center">Checked</th>
+                            <th class="text-center">Approved</th>
                         </tr>
                         <tr>
-                            <td style="height: 100px;"></td>
-                            <td style="height: 100px;"></td>
-                            <td style="height: 100px;"></td>
-                            <td style="height: 100px;"></td>
+                            <td class="text-center" style="height: 100px;"></td>
+                            <td class="text-center" style="height: 100px;"></td>
+                            <td class="text-center" style="height: 100px; margin-top: 10px;">
+                                <img src="/installments_payment/static/img/signature-director.png" style="height: 80px; margin-top: 10px;"/>
+                            </td>
+                            <td class="text-center" style="height: 100px;"></td>
                         </tr>
                         <tr>
-                            <td><t t-esc="docs.user_id.name"/></td>
-                            <td><t t-esc="docs.user_id.name"/></td>
-                            <td>Dedy Kurniawan</td>
-                            <td>Direktur</td>
+                            <td class="text-center"><t t-esc="docs.user_id.name"/></td>
+                            <td class="text-center"><t t-esc="docs.user_id.name"/></td>
+                            <td class="text-center">Dedy Kurniawan</td>
+                            <td class="text-center">Direktur</td>
                         </tr>
                     </table>
 

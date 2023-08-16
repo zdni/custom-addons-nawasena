@@ -141,6 +141,15 @@ class PRInstallmentsPayment(models.Model):
                 'payment_date': self.payment_date,
             })
     
+    @api.depends('line_ids.state', 'line_ids.corr_amount')
+    def _compute_remaining(self):
+        for doc in self:
+            total = 0
+            for line in doc.line_ids:
+                if line.state == 'open':
+                    total += line.corr_amount
+            doc.update({ 'remaining_amount': total })
+    
 class PRLInstallmentsPayment(models.Model):
     _name = 'prl.installments.payment'
     _description = 'Payment Request Line Installments'
@@ -152,6 +161,13 @@ class PRLInstallmentsPayment(models.Model):
             if doc.installments_id:
                 installments = self.env['installments.payment.line'].search([ ('id', '=', doc.installments_id.id) ])
                 if installments: doc.update({ 'amount': installments.main_debt })
+    
+    @api.depends('installments_id')
+    def _count_corr_amount(self):
+        for doc in self:
+            if doc.installments_id:
+                installments = self.env['installments.payment.line'].search([ ('id', '=', doc.installments_id.id) ])
+                if installments: doc.update({ 'corr_amount': installments.doc_id.installments_corr })
 
     @api.depends('amount', 'interest_amount')
     def _count_total_installments(self):
@@ -163,6 +179,7 @@ class PRLInstallmentsPayment(models.Model):
     amount = fields.Monetary('Main Debt', compute='_count_amount', readonly=True, store=True)
     interest_amount = fields.Monetary('Interest', required=True)
     total_installments = fields.Monetary('Total Installments', compute='_count_total_installments', readonly=True, store=True)
+    corr_amount = fields.Monetary('Corr Amount', compute='_count_corr_amount', readonly=True, store=True)
 
 
     @api.model
