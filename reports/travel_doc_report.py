@@ -49,7 +49,10 @@ class TravelDocReport(models.AbstractModel):
                     top_seal.append(seal.name)
             if line.position == 'bottom':
                 for seal in line.seal_ids:
-                    bottom_seal.append(seal.name) 
+                    bottom_seal.append(seal.name)
+
+        top_seal = sorted(top_seal) 
+        bottom_seal = sorted(bottom_seal) 
 
         # top_seal = [line.seal_id.name for line in seal_number_ids.filtered(lambda l: l.position == 'top')]
         # bottom_seal = [line.seal_id.name for line in seal_number_ids.filtered(lambda l: l.position == 'bottom')]
