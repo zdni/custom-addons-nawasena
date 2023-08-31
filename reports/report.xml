@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <data>
+
+        <report
+            id="action_report_purchase_xlsx"
+            model="report.purchase.wizard"
+            string="Purchase Order"
+            report_type="xlsx"
+            name="custom_report_purchase.report_purchase_xlsx"
+            file="custom_report_purchase.report_purchase_xlsx"
+            attachment_use="True"
+            menu = "False"
+        />
+    
+    </data>
+</odoo>

@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <data>
+    
+        <record id="view_report_purchase_wizard" model="ir.ui.view">
+            <field name="name">report.purchase.wizard.form</field>
+            <field name="model">report.purchase.wizard</field>
+            <field name="arch" type="xml">
+                <form string="Request PO">
+                    <group>
+                        <field name="order_date" /> 
+                    </group>
+                    <group>
+                        <field name="order_ids"  widget="many2many_tags" options="{'no_create': True, 'no_create_edit':True}"/> 
+                    </group>
+                    <footer>
+                        <button name="print_excel" string="Print" type="object"/>
+                        <button string="Cancel" class="btn-secondary" special="cancel" />
+                    </footer>
+                </form>
+            </field>
+        </record>
+
+        <act_window id="action_report_purchase_wizard"
+                name="Request PO"
+                res_model="report.purchase.wizard"
+                view_mode="form"
+                target="new"/>
+
+        <menuitem action="action_report_purchase_wizard"
+                id="menu_report_purchase_wizard"
+                parent="purchase.menu_procurement_management"/>
+
+    </data>
+    
+</odoo>
