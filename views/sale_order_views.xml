@@ -33,8 +33,8 @@
             <xpath expr="//page[@name='order_lines']" position="after">
                 <page name="delivery_information" string="Delivery" attrs="{'invisible': [('is_delivery', '=', False)]}">
                     <group string="Information">
-                        <field name="delivery_number" attrs="{'readonly': [('state', 'in', ['sale', 'done', 'cancel'])], 'required': [('is_delivery', '=', True)]}" />
-                        <field name="order_number" attrs="{'readonly': [('state', 'in', ['sale', 'done', 'cancel'])], 'required': [('is_delivery', '=', True)]}" />
+                        <field name="delivery_number" attrs="{'required': [('is_delivery', '=', True)]}" />
+                        <field name="order_number" attrs="{'required': [('is_delivery', '=', True)]}" />
                         <field name="product_delivery_id" attrs="{'readonly': [('state', 'in', ['sale', 'done', 'cancel'])], 'required': [('is_delivery', '=', True)]}" />
                         <field name="delivery_date" />
                     </group>
