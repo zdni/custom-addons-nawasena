@@ -22,6 +22,7 @@ class ReportPurchaseWizard(models.TransientModel):
             orders = self.env['purchase.order'].search([ 
                 ('date_order', '>=', early_day_obj), 
                 ('date_order', '<=', end_of_day_obj),
+                ('state', '!=', 'cancel'),
             ])
             self.order_ids = orders.ids
 
