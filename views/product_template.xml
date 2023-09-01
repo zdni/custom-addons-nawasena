@@ -1,19 +1,34 @@
 <?xml version="1.0" encoding="utf-8"?>
 <odoo>
-    <record id="product_template_form_view_procurement_button_inherit_product" model="ir.ui.view">
-        <field name="name">product.template.stock.card</field>
-        <field name="model">product.template</field>
-        <field name="inherit_id" ref="stock.product_template_form_view_procurement_button"/>
-        <field name="arch" type="xml">
-            <button name="toggle_active" position="before">
-                <button 
-                    string="Stock Card"
-                    type="object"
-                    name="action_view_stock_card_product"
-                    attrs="{'invisible':[('type', 'not in', ['product', 'consu'])]}"
-                    class="oe_stat_button" icon="fa-list-alt"
-                />
-            </button>
-        </field>
-    </record>
+    <data>
+    
+        <record id="product_template_form_view_procurement_button_inherit_product" model="ir.ui.view">
+            <field name="name">product.template.stock.card</field>
+            <field name="model">product.template</field>
+            <field name="inherit_id" ref="stock.product_template_form_view_procurement_button"/>
+            <field name="arch" type="xml">
+                <button name="toggle_active" position="before">
+                    <button 
+                        string="Stock Card"
+                        type="object"
+                        name="action_view_stock_card_product"
+                        attrs="{'invisible':[('type', 'not in', ['product', 'consu'])]}"
+                        class="oe_stat_button" icon="fa-list-alt"
+                    />
+                </button>
+            </field>
+        </record>
+
+        <record id="action_server_refresh_stock_card" model="ir.actions.server">
+            <field name="name">Refrest Stock Card</field>
+            <field name="model_id" ref="model_product_template"/>
+            <field name="binding_model_id" ref="model_product_template"/>
+            <field name="state">code</field>
+            <field name="code">
+                for record in records:
+                    record.refresh_stock_card()
+            </field>
+        </record>
+    
+    </data>
 </odoo>
