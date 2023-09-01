@@ -89,6 +89,7 @@ class PurchaseOrderReportXlsx(models.AbstractModel):
 
             # line
             number = 1
+            total = 0
             for line in order.order_line:
                 sheet.write(row, 0, number, format_cell_center)
                 sheet.write(row, 1, line.name, format_cell_left)
@@ -97,9 +98,13 @@ class PurchaseOrderReportXlsx(models.AbstractModel):
                 sheet.write(row, 4, line.taxes_id.name or '', format_cell_left)
                 sheet.write(row, 5, line.price_unit, format_cell_right)
                 sheet.write(row, 6, line.price_subtotal, format_cell_right)
+                total += line.price_subtotal
                 row += 1
                 number += 1
             
+            sheet.merge_range(row, 0, row, 5, 'Total (Rp)', format_cell_left)
+            sheet.write(row, 6, total, format_cell_right)
+            row += 1
             sheet.merge_range(row, 0, row, 6, '', format3)
             row += 1
 
