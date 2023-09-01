@@ -18,22 +18,26 @@
                             <thead>
                                 <tr>
                                     <th>#</th>
-                                    <th>Payment</th>
-                                    <th>Pembayaran</th>
-                                    <th class="text-right">Amount</th>
+                                    <th>Expenses</th>
+                                    <th>Date</th>
+                                    <th>Employee</th>
+                                    <th>Payment By</th>
+                                    <th>Notes</th>
+                                    <th class="text-right">Amount (Rp)</th>
                                 </tr>
                             </thead>
                             <tbody>
                                 <t t-set="number" t-value="0"/>
-                                <t t-set="total_expense" t-value="0"/>
-                                <t t-foreach="docs.line_ids" t-as="line">
+                                <t t-foreach="expenses" t-as="expense">
                                     <t t-set="number" t-value="number + 1"/>
-                                    <t t-set="total_expense" t-value="total_expense + line.amount"/>
                                     <tr style="border: 1px solid #DEE2E6 !important;">
                                         <td><t t-esc="number"/></td>
-                                        <td><t t-esc="line.sheet_id.bank_journal_id.name"/></td>
-                                        <td><t t-esc="line.sheet_id.name"/></td>
-                                        <td class="text-right"><t t-esc="line.amount" t-options="{'widget': 'monetary', 'display_currency': res_company.currency_id}"/></td>
+                                        <td><t t-esc="expense['name']"/></td>
+                                        <td><t t-esc="expense['date']"/></td>
+                                        <td><t t-esc="expense['employee']"/></td>
+                                        <td><t t-esc="expense['payment_by']"/></td>
+                                        <td><t t-esc="expense['notes']"/></td>
+                                        <td class="text-right"><t t-esc="expense['amount']" t-options="{'widget': 'monetary', 'display_currency': res_company.currency_id}"/></td>
                                     </tr>
                                 </t>
                             </tbody>
@@ -46,7 +50,7 @@
                             <table class="table table-sm table-bordered">
                                 <tr>
                                     <th>Total</th>
-                                    <td class="text-right"><t t-esc="total_expense" t-options="{'widget': 'monetary', 'display_currency': res_company.currency_id}"/></td>
+                                    <td class="text-right"><t t-esc="total_expenses" t-options="{'widget': 'monetary', 'display_currency': res_company.currency_id}"/></td>
                                 </tr>
                             </table>
                         </div>
@@ -65,12 +69,13 @@
                                 <img src="/pr_expenses/static/img/signature-director.png" style="height: 80px; margin-top: 10px;"/>
                             </td>
                             <td class="text-center" style="height: 100px;"></td>
+                            <td class="text-center" style="height: 100px;"></td>
                         </tr>
                         <tr>
-                            <td class="text-center"><t t-esc="docs.user_id.name"/></td>
-                            <td class="text-center"><t t-esc="docs.user_id.name"/></td>
-                            <td class="text-center">Dedy Kurniawan</td>
-                            <td class="text-center">Direktur</td>
+                            <th class="text-center"><t t-esc="docs.user_id.name"/></th>
+                            <th class="text-center"><t t-esc="docs.user_id.name"/></th>
+                            <th class="text-center">Dedy Kurniawan</th>
+                            <th class="text-center">Direktur</th>
                         </tr>
                     </table>
                 </div>

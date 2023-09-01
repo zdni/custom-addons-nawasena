@@ -11,9 +11,31 @@ class PRExpensesReport(models.AbstractModel):
     @api.model
     def _get_report_values(self, docids, data=None):
         docs = self.env['pr.expense'].browse(docids[0])
+        mode = {
+            'own_account': 'Employee (to reimburse)',
+            'company_account': 'Company',
+        }
+
+        expenses = []
+        total_expenses = 0
+        for line in docs.line_ids:
+            sheet = line.sheet_id
+            data = {
+                'name': sheet.name,
+                'date': sheet.expense_line_ids[0].date.strftime('%d %b %Y'),
+                'employee': sheet.employee_id.name,
+                'payment_by': mode[sheet.payment_mode],
+                'notes': sheet.expense_line_ids[0].description,
+                'amount': sheet.total_amount,
+            }
+            expenses.append(data)
+            
+            total_expenses += sheet.total_amount 
 
         return {
             'doc_model': 'pr.expense',
             'data': data,
             'docs': docs,
+            'expenses': expenses,
+            'total_expenses': total_expenses
         }
