@@ -1,5 +1,6 @@
 from odoo import api, fields, models, _
 from odoo.exceptions import UserError, AccessError
+from werkzeug import url_encode
 
 import logging
 _logger = logging.getLogger(__name__)
@@ -25,23 +26,66 @@ class PRExpense(models.Model):
             sheets = self.env['hr.expense'].search([
                 ('date', '>=', doc.start_date),
                 ('date', '<=', doc.end_date),
-                ('state', '=', 'approved'),
+                ('state', '=', 'reported'),
             ])
             for sheet in sheets:
+                journal_id = False if sheet.payment_mode == 'own_account' else sheet.sheet_id.bank_journal_id.id
                 self.env['prl.expense'].create({
                     'payment_id': doc.id,
-                    'sheet_id': sheet.id,
-                    'amount': sheet.total_amount,
+                    'sheet_id': sheet.sheet_id.id,
+                    'amount': sheet.sheet_id.total_amount,
+                    'journal_id': journal_id,
                 })
                 
     @api.multi
     def action_done(self):
         for doc in self:
             for line in doc.line_ids:
+                sheet = line.sheet_id
+                sheet.approve_expense_sheets()
+                if sheet.payment_mode == 'company_account':
+                    sheet.write({
+                        'bank_journal_id': line.journal_id.id,
+                        'accounting_date': line.payment_date
+                    })
                 line.sheet_id.action_sheet_move_create()
+                if sheet.payment_mode == 'own_account':
+                    self.payment_expense(line)
+
                 line.write({ 'state': 'paid' })
                 
             doc.write({ 'state': 'done' })
+
+    def payment_expense(self, line):
+        sheet = line.sheet_id
+        partner_id = sheet.address_id.id or sheet.employee_id.id and sheet.employee_id.address_home_id.id
+        payment_methods = line.journal_id.outbound_payment_method_ids
+        payment_method_id = payment_methods and payment_methods[0] or False
+        
+        payment = self.env['account.payment'].create({
+            'partner_type': 'supplier',
+            'payment_type': 'outbound',
+            'partner_id': partner_id,
+            'journal_id': line.journal_id.id,
+            'company_id': line.journal_id.company_id.id,
+            'payment_method_id': payment_method_id.id,
+            'amount': line.amount,
+            'currency_id': line.currency_id.id,
+            'payment_date': line.payment_date,
+            'communication': ''
+        })
+        payment.post()
+
+        # Log the payment in the chatter
+        body = (_("A payment of %s %s with the reference <a href='/mail/view?%s'>%s</a> related to your expense %s has been made.") % (payment.amount, payment.currency_id.symbol, url_encode({'model': 'account.payment', 'res_id': payment.id}), payment.name, sheet.name))
+        sheet.message_post(body=body)
+
+        # Reconcile the payment and the expense, i.e. lookup on the payable account move lines
+        account_move_lines_to_reconcile = self.env['account.move.line']
+        for line in payment.move_line_ids + sheet.account_move_id.line_ids:
+            if line.account_id.internal_type == 'payable' and not line.reconciled:
+                account_move_lines_to_reconcile |= line
+        account_move_lines_to_reconcile.reconcile()
 
     @api.multi
     def print_doc(self):
@@ -78,6 +122,8 @@ class PRLExpense(models.Model):
         ('open', 'Open'),
         ('paid', 'Paid'),
     ], string='State', default='open', readonly=True)
+    journal_id = fields.Many2one('account.journal', string='Journal', domain=[('type', 'in', ['bank', 'cash'])])
+    payment_date = fields.Date('Payment Date')
 
     currency_id = fields.Many2one("res.currency", string="Currency", readonly=True, required=True, default=_default_currency_id)
     company_id = fields.Many2one('res.company', 'Company', required=True, index=True, readonly=True, default=lambda self: self.env.user.company_id.id)

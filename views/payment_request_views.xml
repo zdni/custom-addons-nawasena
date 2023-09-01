@@ -30,13 +30,15 @@
                         <field name="payment_id" invisible="1"/>
                         <field name="name" invisible="1"/>
                         <field name="sheet_id"/>
+                        <field name="amount"/>
+                        <field name="journal_id"/>
+                        <field name="payment_date"/>
                         <field name="state"/>
                     </tree>
                 </field>
             </xpath>
             <xpath expr="//header" position="inside">
                 <button name="action_done" states="approved" type="object" string="Done"/>
-                <button name="print_doc" states="draft,approved,done" type="object" string="Print"/>
             </xpath>
             <xpath expr="//page[@name='other_info']" position="inside">
                 <group>
