@@ -37,6 +37,8 @@ class InvoiceCustomerReport(models.AbstractModel):
         datas = {}
 
         for customer in customer_ids:
+            customer_name = customer.parent_id.name if customer.parent_id else customer.name
+
             invoices = self.env['account.invoice'].search([
                 ('partner_id.id', '=', customer.id),
                 ('type', '=', 'out_invoice'),
@@ -45,35 +47,46 @@ class InvoiceCustomerReport(models.AbstractModel):
                 ('date_invoice', '<=', end_date),
             ], order='date_invoice ASC')
             for invoice in invoices:
-                price_unit = qty = 0
-                for line in invoice.invoice_line_ids:
-                    price_unit = line.price_unit
-                    is_prod_del = self.env['setting.product.pricelist'].search([ ('product_id', '=', line.product_id.product_tmpl_id.id) ])
-                    if is_prod_del: qty += line.quantity
-
-                destination = location = ''
-                if invoice.origin: 
-                    order = self.env['sale.order'].search([ ('name', '=', invoice.origin) ], limit=1)
-                    if order.partner_shipping_id:
+                if invoice.origin:
+                    order_ids = [name.strip() for name in invoice.origin.split(',')]
+                    orders = self.env['sale.order'].search([ ('name', 'in', order_ids) ])
+                    for order in orders:
                         destination = order.partner_shipping_id.parent_id.name or ''
                         location = order.partner_shipping_id.name or ''
-                        price_unit = order.partner_shipping_id.parent_id.oat
-
-                
-
-                data = {
-                    'date': invoice.date_invoice,
-                    'number': invoice.number,
-                    'customer': destination,
-                    'location': location,
-                    'unit_price': price_unit,
-                    'qty': str(int(qty)),
-                    'amount': invoice.amount_total,
-                }
-                if customer.name in datas:
-                    datas[customer.name].append(data)
+                        price_unit = order.order_line[0].price_unit or 0
+                        qty = order.order_line[0].product_uom_qty or 0
+                        data = {
+                            'date': invoice.date_invoice,
+                            'number': invoice.number,
+                            'customer': destination,
+                            'location': location,
+                            'unit_price': price_unit,
+                            'qty': str(int(qty)),
+                            'amount': order.amount_total,
+                        }
+                        if customer_name in datas:
+                            datas[customer_name].append(data)
+                        else:
+                            datas[customer_name] = [data]
                 else:
-                    datas[customer.name] = [data]
+                    price_unit = invoice.invoice_line_ids[0].price_unit or 0
+                    qty = invoice.invoice_line_ids[0].quantity or 0
+                    destination = invoice.partner_shipping_id.parent_id.name or invoice.partner_shipping_id.name
+                    location = invoice.partner_shipping_id.name if invoice.partner_shipping_id.parent_id else ''
+
+                    data = {
+                        'date': invoice.date_invoice,
+                        'number': invoice.number,
+                        'customer': destination,
+                        'location': location,
+                        'unit_price': price_unit,
+                        'qty': str(int(qty)),
+                        'amount': invoice.amount_total,
+                    }
+                    if customer_name in datas:
+                        datas[customer_name].append(data)
+                    else:
+                        datas[customer_name] = [data]
         
         return {
             'currency_precision': user_currency.decimal_places,
