@@ -132,7 +132,7 @@ class PRLExpense(models.Model):
     def create(self, vals):
         if vals.get('name', 'New') == 'New':
             sheet = self.env['hr.expense.sheet'].search([ ('id', '=', vals['sheet_id']) ], limit=1)
-            vals['name'] = sheet.name or '/'
+            vals['name'] = sheet.name + ', ' + (sheet.expense_line_ids[0].date.strftime('%d/%m/%Y') or '') or '/'
             
         return super(PRLExpense, self).create(vals)
     

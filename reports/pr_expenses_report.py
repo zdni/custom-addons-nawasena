@@ -22,10 +22,10 @@ class PRExpensesReport(models.AbstractModel):
             sheet = line.sheet_id
             data = {
                 'name': sheet.name,
-                'date': sheet.expense_line_ids[0].date.strftime('%d %b %Y'),
+                'date': sheet.expense_line_ids[0].date.strftime('%d %b %Y') or '',
                 'employee': sheet.employee_id.name,
                 'payment_by': mode[sheet.payment_mode],
-                'notes': sheet.expense_line_ids[0].description,
+                'notes': sheet.expense_line_ids[0].description or '',
                 'amount': sheet.total_amount,
             }
             expenses.append(data)

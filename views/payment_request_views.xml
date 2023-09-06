@@ -28,8 +28,8 @@
                 >
                     <tree string="Payment Lines" editable="bottom">
                         <field name="payment_id" invisible="1"/>
-                        <field name="name" invisible="1"/>
-                        <field name="sheet_id"/>
+                        <field name="name"/>
+                        <field name="sheet_id" invisible="1"/>
                         <field name="amount"/>
                         <field name="journal_id"/>
                         <field name="payment_date"/>
