@@ -40,7 +40,7 @@
                         </group>
                     </group>
                     <group name="seal_number" string="Seal Number">
-                        <field name="seal_number_ids" attrs="{'readonly': [('use_seal', '=', True)]}">
+                        <field name="seal_number_ids">
                             <tree string="Seal Number" editable="bottom">
                                 <field name="delivery_id" invisible="1"/>
                                 <field name="change_vehicle_id" invisible="1"/>

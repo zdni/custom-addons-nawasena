@@ -1,5 +1,6 @@
 from odoo import api, fields, models, _
 from odoo.exceptions import UserError
+from datetime import timedelta
 
 import logging
 _logger = logging.getLogger(__name__)
@@ -43,6 +44,7 @@ class FleetVehicleLogFuel(models.Model):
                 doc.action_validate()
 
                 date_obj = fields.Datetime.from_string( rec.date )
+                date_obj = date_obj + timedelta(hours=2)
                 for move in doc.move_ids:
                     move.write({ 'date': date_obj })
 
@@ -69,5 +71,6 @@ class FleetVehicleLogFuel(models.Model):
             rec.write({'inv_adj_id': doc.id, 'state': 'posted'})
 
             date_obj = fields.Datetime.from_string(rec.date)
+            date_obj = date_obj + timedelta(hours=2)
             for move in doc.move_ids:
                 move.write({ 'date': date_obj })
