@@ -31,3 +31,13 @@ class ReportInvoiceCustomerWizard(models.TransientModel):
         
         data = {'start_date': self.start_date, 'end_date': self.end_date, 'customer_ids': self.customer_ids.ids}
         return self.env.ref('report_invoice.action_report_invoice_customer').with_context().report_action([], data=data)
+        
+    @api.multi
+    def generate_excel(self):
+        if (not self.env.user.company_id.logo):
+            raise UserError(_("You have to set a logo or a layout for your company."))
+        elif (not self.env.user.company_id.external_report_layout_id):
+            raise UserError(_("You have to set your reports's header and footer layout."))
+        
+        data = {'start_date': self.start_date, 'end_date': self.end_date, 'customer_ids': self.customer_ids.ids, 'company_id': self.env.user.company_id.id}
+        return self.env.ref('report_invoice.action_report_invoice_customer_xlsx').report_action(self, data=data)

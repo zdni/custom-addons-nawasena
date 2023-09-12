@@ -6,7 +6,7 @@
     'description': "Custom Module Report Invoice per Customer",
     'category': 'Report',
     'website': 'http://www.technoindo.com',
-    'depends': ['base', 'account'],
+    'depends': ['base', 'account', 'report_xlsx'],
     'data': [
         'reports/report_invoice_customer_template.xml',
         'reports/report.xml',

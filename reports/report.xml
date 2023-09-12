@@ -11,6 +11,17 @@
             name="report_invoice.report_invoice_customer"
             print_report_name="'Report Invoice Customer'"
         />
+
+        <report
+            id="action_report_invoice_customer_xlsx"
+            model="report.invoice.customer.wizard"
+            string="Report Invoice Customer Excel"
+            report_type="xlsx"
+            name="report_invoice.report_invoice_customer_xlsx"
+            file="report_invoice.report_invoice_customer_xlsx"
+            attachment_use="True"
+            menu="False"
+        />
     
     </data>
 </odoo>
