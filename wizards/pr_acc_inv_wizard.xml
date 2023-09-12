@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+
+    <record id="pr_acc_inv_wizard_view_form" model="ir.ui.view">
+        <field name="name">pr.acc_inv.wizard.view.form</field>
+        <field name="model">pr.acc_inv.wizard</field>
+        <field name="arch" type="xml">
+            <form string="Print Excel">
+                <group>
+                    <field name="doc_id" attrs="{'readonly': True, 'invisible': True}" />
+                    <field name="type" />
+                </group>
+                <footer>
+                    <button name="generate_excel" string="Excel" type="object" class="btn-primary"/>
+                    <button string="Cancel" class="btn-secondary" special="cancel"/>
+                </footer>
+            </form>
+        </field>
+    </record>
+
+    ir<record id="pr_acc_inv_wizard_action" model="ir.actions.act_window">
+        <field name="name">Print Excel</field>
+        <field name="type">ir.actions.act_window</field>
+        <field name="res_model">pr.acc_inv.wizard</field>
+        <field name="view_type">form</field>
+        <field name="view_mode">form</field>
+        <field name="target">new</field>
+    </record>
+
+</odoo>

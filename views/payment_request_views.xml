@@ -26,6 +26,7 @@
             </xpath>
             <xpath expr="//header" position="inside">
                 <button name="action_done" states="approved" type="object" string="Done"/>
+                <button name="wizard_print_excel" type="object" string="Excel"/>
             </xpath>
             <field name="amount" position="after">
                 <field name="payment_amount"/>

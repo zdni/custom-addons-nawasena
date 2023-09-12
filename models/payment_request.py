@@ -71,6 +71,18 @@ class PRAccountInvoice(models.Model):
     def print_doc(self):
         return self.env.ref('pr_invoice.action_report_pr_account_invoice')\
             .with_context(discard_logo_check=True).report_action(self)
+    
+    @api.multi
+    def wizard_print_excel(self):
+        return {    
+            'name': _("Print Excel"),
+            'type': 'ir.actions.act_window',
+            'res_model': 'pr.acc_inv.wizard',
+            'view_type': 'form',
+            'view_mode': 'form',
+            'target': 'new',
+            'context': { 'default_doc_id': self.id }
+        }
 
     def apply_for_all_line(self):
         for line in self.line_ids:

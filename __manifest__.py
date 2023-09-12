@@ -8,7 +8,7 @@ This module contains all the common features of Payment Request for Vendor Bills
     """,
     'category': 'Payment',
     'website': 'http://www.technoindo.com',
-    'depends': ['base', 'account', 'payment_request'],
+    'depends': ['base', 'account', 'payment_request', 'report_xlsx'],
     'data': [
         'security/ir.model.access.csv',
         
@@ -16,6 +16,8 @@ This module contains all the common features of Payment Request for Vendor Bills
         'reports/report_payment_request.xml',
         
         'views/payment_request_views.xml',
+
+        'wizards/pr_acc_inv_wizard.xml',
     ],
     'installable': True,
     'application': True,

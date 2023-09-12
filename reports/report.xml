@@ -11,6 +11,17 @@
             name="pr_invoice.report_pr_account_invoice"
             print_report_name="(object.name)"
         />
+
+        <report 
+            id="action_report_pr_account_invoice_xlsx"
+            string="Payment Request Excel"
+            model="pr.account.invoice"
+            report_type="xlsx"
+            file="pr_invoice.report_pr_account_invoice_xlsx" 
+            name="pr_invoice.report_pr_account_invoice_xlsx"
+            attachment_use="True"
+            menu="False"
+        />
     
     </data>
 </odoo>
